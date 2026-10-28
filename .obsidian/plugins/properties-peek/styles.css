@@ -1,0 +1,25 @@
+/* Properties Peek — Stylesheet */
+
+body.properties-peek-hidden {
+	--metadata-display-reading: none;
+	--metadata-display-editing: none;
+}
+
+/* Hide properties block in Reading view, Live Preview, embedded notes, and hover previews */
+body.properties-peek-hidden .markdown-source-view.is-live-preview.show-properties .metadata-container,
+body.properties-peek-hidden .markdown-source-view .metadata-container,
+body.properties-peek-hidden .markdown-preview-view.show-properties .metadata-container,
+body.properties-peek-hidden .markdown-preview-view .metadata-container,
+body.properties-peek-hidden .markdown-rendered .metadata-container,
+body.properties-peek-hidden .markdown-embed .metadata-container,
+body.properties-peek-hidden .hover-popover .metadata-container,
+body.properties-peek-hidden .markdown-preview-view .frontmatter,
+body.properties-peek-hidden .markdown-preview-view .frontmatter-container,
+body.properties-peek-hidden .markdown-preview-view .el-pre.mod-frontmatter {
+	display: none;
+}
+
+/* Optional: Hide raw YAML frontmatter lines in Source mode when enabled in settings */
+body.properties-peek-hidden.properties-peek-hide-source .markdown-source-view.mod-cm6:not(.is-live-preview) .cm-line.properties-peek-frontmatter-line {
+	display: none;
+}

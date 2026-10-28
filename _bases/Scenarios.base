@@ -1,0 +1,15 @@
+filters:
+  and:
+    - domain == "starter"
+    - type == "scenario"
+views:
+  - type: table
+    name: Scenarios
+    groupBy:
+      property: decision_type
+      direction: ASC
+    order:
+      - file.name
+      - difficulty
+      - time_minutes
+      - decision_type

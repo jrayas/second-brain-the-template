@@ -1,0 +1,12 @@
+filters:
+  and:
+    - domain == "starter"
+    - answer_verified == false
+views:
+  - type: table
+    name: Answers to verify
+    order:
+      - file.name
+      - type
+      - difficulty
+      - confidence

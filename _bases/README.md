@@ -1,0 +1,3 @@
+# Bases views
+
+Written from the Obsidian Bases syntax page (obsidian.md/help/bases/syntax): `filters` with `and`, string expressions, `groupBy`, `order` (column list). The page does not document a row-sort key, so rows are ordered by clicking a column header in Obsidian; `order` and `level` are columns to sort by. Not confirmed from the docs: `!companion` (empty test) in "Gaps concept notes without a visual" and `track.contains(...)` in "Learning path". If either shows an error, adjust the filter in the Bases UI. Every view filters on `domain == "pcb"`; copy a view and change the domain for another domain.

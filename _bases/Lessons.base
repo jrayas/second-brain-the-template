@@ -1,0 +1,12 @@
+filters:
+  and:
+    - domain == "starter"
+    - type == "visual" && kind == "lesson"
+views:
+  - type: table
+    name: Lessons
+    order:
+      - file.name
+      - section
+      - tested
+      - status

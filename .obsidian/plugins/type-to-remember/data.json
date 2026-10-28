@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "settings": {
+    "preset": "none",
+    "typeHeadings": false,
+    "includeLists": true,
+    "listMarkers": false,
+    "includeQuotes": true,
+    "includeCallouts": true,
+    "includeTables": false,
+    "includeMath": false,
+    "includeCodeBlocks": false,
+    "codeBlockMode": "exact",
+    "caseSensitive": false,
+    "punctuationStrict": false,
+    "allowBackspace": true,
+    "stopOnError": false,
+    "inputPosition": "under",
+    "lineLayout": "words",
+    "maxLineChars": 0,
+    "lineEndSpace": 4,
+    "minAccuracyPercent": 70,
+    "minSessionSeconds": 20,
+    "dayStartsAt": "04:00",
+    "minNoteWords": 20,
+    "heatmapMetric": "minutes",
+    "heatmapRangeMonths": 12,
+    "streakFreeze": true,
+    "weekStartsOn": "monday",
+    "queueProperty": "queue",
+    "queueRepeatProperty": "queue_repeat",
+    "queueDueProperty": "queue_due",
+    "queueMirror": false,
+    "typingStyle": "race",
+    "wordBoxLines": 3,
+    "spaceMarker": "space",
+    "racePaceWpm": 0,
+    "level": 1,
+    "dueSessionChunks": 20,
+    "queueView": {
+      "mode": "list",
+      "sort": [],
+      "states": [],
+      "search": "",
+      "hidden": [
+        "folder",
+        "tags",
+        "timesFinished",
+        "dueChunks"
+      ]
+    },
+    "randomMode": "random",
+    "randomChunks": 5,
+    "randomFilter": {
+      "includeFolders": [
+        "Knowledge/pcb"
+      ],
+      "excludeFolders": [],
+      "subfolders": true,
+      "includeTags": [],
+      "excludeTags": [],
+      "onlyOptedIn": true
+    },
+    "randomPresets": [
+      {
+        "id": "b37aa26c-5100-48da-9d42-7f65c7ef71ad",
+        "name": "first",
+        "options": {
+          "filter": {
+            "includeFolders": [
+              "Knowledge/pcb"
+            ],
+            "excludeFolders": [],
+            "subfolders": true,
+            "includeTags": [],
+            "excludeTags": [],
+            "onlyOptedIn": true
+          },
+          "mode": "weighted",
+          "chunks": 5
+        }
+      }
+    ]
+  }
+}

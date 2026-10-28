@@ -1,0 +1,11 @@
+filters:
+  and:
+    - domain == "starter"
+    - type == "kb" && kind == "concept" && !companion
+views:
+  - type: table
+    name: Gaps concept notes without a visual
+    order:
+      - file.name
+      - section
+      - level

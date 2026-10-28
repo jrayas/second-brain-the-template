@@ -1,0 +1,17 @@
+{
+  "defaultView": "column",
+  "showHidden": false,
+  "density": "comfortable",
+  "previewColumn": true,
+  "frontmatterColumns": "",
+  "readOnly": false,
+  "keyBindings": {},
+  "folderPrefs": {
+    "Knowledge": {
+      "mode": "icon"
+    },
+    "Knowledge/pcb": {
+      "mode": "list"
+    }
+  }
+}

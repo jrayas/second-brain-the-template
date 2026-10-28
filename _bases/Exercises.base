@@ -1,0 +1,15 @@
+filters:
+  and:
+    - domain == "starter"
+    - type == "exercise"
+views:
+  - type: table
+    name: Exercises
+    groupBy:
+      property: level
+      direction: ASC
+    order:
+      - file.name
+      - difficulty
+      - time_minutes
+      - tests

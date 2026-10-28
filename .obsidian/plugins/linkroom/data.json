@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "settings": {
+    "fontFamily": "interface",
+    "customFontFamily": "",
+    "fontSize": "medium",
+    "linkStyle": "hairline",
+    "linkColourMode": "theme",
+    "customLinkColour": "",
+    "underlineThickness": "thin",
+    "rowSpacing": "comfortable",
+    "folderPathStyle": "dimmed",
+    "wrapLongNames": false,
+    "maxWrapLines": 2,
+    "unresolvedLinks": "dimmed",
+    "duplicateFolders": "auto",
+    "openOnStartup": false,
+    "startWith": "remembered",
+    "defaults": {
+      "columns": "2",
+      "sort": "az",
+      "showFolders": false,
+      "showHeadings": true,
+      "showAliases": false
+    }
+  },
+  "viewState": {
+    "showFolders": false,
+    "showHeadings": false,
+    "showAliases": false,
+    "showBoth": true,
+    "showOutgoing": true,
+    "showBacklinks": true,
+    "sort": "az",
+    "columns": "2"
+  }
+}

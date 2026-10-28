@@ -1,0 +1,14 @@
+module: pathways
+description: Reading sequence and pairing between notes.
+properties:
+  prerequisites:
+    type: list
+    items: link
+    default: []
+    description: Notes to read first.
+  next:
+    type: link
+    description: Suggested next note.
+  companion:
+    type: link
+    description: The paired visual (from a kb note) or the paired kb note (from a visual).

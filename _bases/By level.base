@@ -1,0 +1,30 @@
+filters:
+  and:
+    - domain == "starter"
+    - type != ""
+views:
+  - type: table
+    name: By level
+    filters:
+      and:
+        - type == "kb"
+    groupBy:
+      property: level
+      direction: ASC
+    order:
+      - file.name
+      - type
+      - section
+      - level
+      - id
+      - order
+      - status
+    sort:
+      - property: id
+        direction: ASC
+      - property: section
+        direction: DESC
+      - property: domain
+        direction: ASC
+    columnSize:
+      note.id: 148

@@ -1,0 +1,9 @@
+{
+  "id": "cascade-view",
+  "name": "Cascade View",
+  "version": "0.1.1",
+  "minAppVersion": "1.13.4",
+  "description": "Browse your vault in a dedicated tab with Finder-style columns, list, icon and gallery views, a preview column and platform-exact keyboard shortcuts.",
+  "author": "Anthirayas",
+  "isDesktopOnly": false
+}

@@ -1,0 +1,72 @@
+{
+  "centerForce": 0,
+  "repelForce": 20,
+  "linkForce": 1,
+  "linkDistance": 164,
+  "nodeSize": 0.5,
+  "linkThickness": 0.5,
+  "showArrows": false,
+  "clusters": false,
+  "rightButtonPan": true,
+  "electrons": {
+    "enabled": false,
+    "speed": 70,
+    "amount": 0.4
+  },
+  "drift": {
+    "enabled": true,
+    "amount": 0.95,
+    "speed": 0.85
+  },
+  "view3d": false,
+  "autoRotate": false,
+  "look": {
+    "brightness": 1.1,
+    "saturation": 1,
+    "nodeBrightness": 1,
+    "nodeOpacity": 1,
+    "linkBrightness": 1,
+    "labelBrightness": 0.3,
+    "labelSize": 10,
+    "backgroundBrightness": 1,
+    "glowStrength": 1,
+    "effectsSpeed": 1,
+    "useNodeColour": false,
+    "nodeColour": "#ff8fb1",
+    "useLinkColour": false,
+    "linkColour": "#78b8ff",
+    "useBackgroundColour": false,
+    "backgroundColour": "#0b0b12",
+    "fov": 50,
+    "depthFade": 1
+  },
+  "activeLayout": "",
+  "shapeStrength": 0.5,
+  "shapeColours": true,
+  "shapeGuide": false,
+  "motion": {
+    "kind": "off",
+    "strength": 0.5,
+    "doubleBeat": true,
+    "activityLinked": false,
+    "speeds": {
+      "heartbeat": 72,
+      "breathe": 12,
+      "vibrate": 30,
+      "shiver": 18,
+      "panic": 5
+    }
+  },
+  "skin": "default",
+  "skinEffects": true,
+  "textFadeThreshold": 2.7,
+  "animate": true,
+  "search": "",
+  "showAttachments": false,
+  "showOrphans": false,
+  "hideUnresolved": false,
+  "excludedFolders": "",
+  "groups": [],
+  "localGraph": true,
+  "localDepth": 1
+}

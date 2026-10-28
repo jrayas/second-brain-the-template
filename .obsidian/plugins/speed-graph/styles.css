@@ -1,0 +1,122 @@
+.speed-graph-view {
+	position: relative;
+	overflow: hidden;
+	padding: 0;
+}
+
+.speed-graph-canvas {
+	display: block;
+	width: 100%;
+	height: 100%;
+	touch-action: none;
+	cursor: grab;
+}
+
+.speed-graph-canvas.is-hovering {
+	cursor: pointer;
+}
+
+.speed-graph-canvas.is-panning {
+	cursor: grabbing;
+}
+
+.speed-graph-status {
+	position: absolute;
+	left: var(--size-4-2);
+	bottom: var(--size-4-2);
+	font-size: var(--font-ui-smaller);
+	color: var(--text-faint);
+	pointer-events: none;
+}
+
+.speed-graph-controls {
+	position: absolute;
+	top: var(--size-4-2);
+	right: var(--size-4-2);
+	max-height: calc(100% - var(--size-4-4));
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	gap: var(--size-4-1);
+}
+
+.speed-graph-controls-body {
+	width: 280px;
+	max-width: 80vw;
+	overflow-y: auto;
+	padding: var(--size-4-2) var(--size-4-3);
+	background: var(--background-secondary);
+	border: 1px solid var(--background-modifier-border);
+	border-radius: var(--radius-m);
+}
+
+.speed-graph-controls.is-collapsed .speed-graph-controls-body {
+	display: none;
+}
+
+.speed-graph-hover {
+	position: absolute;
+	left: var(--fg-x, 0);
+	top: var(--fg-y, 0);
+	max-width: 230px;
+	padding: var(--size-4-1) var(--size-4-2);
+	background: var(--background-secondary);
+	border: 1px solid var(--background-modifier-border);
+	border-radius: var(--radius-s);
+	box-shadow: var(--shadow-s);
+	pointer-events: none;
+}
+
+.speed-graph-hover.is-hidden {
+	display: none;
+}
+
+.speed-graph-hover-title {
+	font-weight: var(--font-semibold);
+	overflow-wrap: anywhere;
+}
+
+.speed-graph-hover-path,
+.speed-graph-hover-meta {
+	font-size: var(--font-ui-smaller);
+	color: var(--text-muted);
+	overflow-wrap: anywhere;
+}
+
+.speed-graph-groups .setting-item {
+	padding: var(--size-4-1) 0;
+}
+
+/* 3D view: a WebGL canvas and a label overlay sit under the (transparent) 2D canvas, which keeps catching the pointer. */
+.speed-graph-gl,
+.speed-graph-overlay {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.speed-graph-gl {
+	z-index: 0;
+	background:
+		radial-gradient(circle at 25% 30%, var(--fg3d-bg-a, transparent), transparent 55%),
+		radial-gradient(circle at 78% 72%, var(--fg3d-bg-b, transparent), transparent 55%),
+		radial-gradient(circle at 60% 18%, var(--fg3d-bg-c, transparent), transparent 45%),
+		var(--fg3d-bg-base, transparent);
+}
+
+.speed-graph-overlay {
+	z-index: 1;
+	pointer-events: none;
+}
+
+.speed-graph-view.is-3d .speed-graph-canvas {
+	position: relative;
+	z-index: 2;
+}
+
+.speed-graph-status,
+.speed-graph-hover,
+.speed-graph-controls {
+	z-index: 3;
+}

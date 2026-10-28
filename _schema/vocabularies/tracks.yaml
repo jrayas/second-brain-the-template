@@ -1,0 +1,5 @@
+# Named learning paths. Key = preferred term; synonyms are replaced by it.
+# Every term starts with its domain and a hyphen, so domains never share a path name.
+vocabulary: tracks
+terms:
+  starter-first-path: {}

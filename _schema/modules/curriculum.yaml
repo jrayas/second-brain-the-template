@@ -1,0 +1,30 @@
+module: curriculum
+requires: [domain]
+description: Where a note sits in the learning path (domain, subject, level and order). These live here, not in folders.
+properties:
+  section:
+    type: enum
+    required: true
+    values: [starter-start-here, starter-reference]
+    description: Subject area. Every value starts with its domain and a hyphen. Append only; renaming a value means editing every note that uses it.
+  level:
+    type: enum
+    required: true
+    values: [beginner, intermediate, advanced, senior]
+    description: Who the note is for.
+  topic:
+    type: string
+    description: Short free-text subtopic, for example decoupling.
+  order:
+    type: integer
+    required: true
+    min: 1
+    description: Reading order within a section. Use gaps of 10. Unique within a section.
+  track:
+    type: list
+    items: term
+    vocabulary: tracks
+    strict: true
+    normalise: true
+    default: []
+    description: Named learning paths this note belongs to.

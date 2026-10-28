@@ -1,0 +1,26 @@
+# Registry of note types for the knowledge base. The plugin never writes this file.
+format: 1                  # version of this schema language (not of your notes)
+min_plugin_version: 0.2.0  # oldest plugin that understands this pack
+
+modules:
+  base: modules/base.yaml
+  findability: modules/findability.yaml
+  relations: modules/relations.yaml
+  review: modules/review.yaml
+  domain: modules/domain.yaml
+  curriculum: modules/curriculum.yaml
+  pathways: modules/pathways.yaml
+  verification: modules/verification.yaml
+
+vocabularies:
+  tags: vocabularies/tags.yaml
+  tracks: vocabularies/tracks.yaml
+
+# prefix: letters used in readable IDs (PREFIX-YYYY-NNNN)
+# version: the `schema` number written into notes of this type
+types:
+  kb:       { file: types/kb.yaml,       prefix: KB, version: 1 }
+  example:  { file: types/example.yaml,  prefix: EG, version: 1 }
+  exercise: { file: types/exercise.yaml, prefix: EX, version: 1 }
+  scenario: { file: types/scenario.yaml, prefix: SC, version: 1 }
+  visual:   { file: types/visual.yaml,   prefix: VS, version: 1 }

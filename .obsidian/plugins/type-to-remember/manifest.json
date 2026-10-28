@@ -1,0 +1,9 @@
+{
+	"id": "type-to-remember",
+	"name": "Type to Remember",
+	"minAppVersion": "1.13.4",
+	"description": "Practise recall by typing your own notes, with spaced repetition and a progress heatmap.",
+	"author": "Anthirayas",
+	"isDesktopOnly": true,
+	"version": "0.1.0"
+}

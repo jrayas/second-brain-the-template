@@ -1,0 +1,17 @@
+filters:
+  and:
+    - domain == "starter"
+    - type != ""
+views:
+  - type: table
+    name: By section
+    groupBy:
+      property: section
+      direction: ASC
+    order:
+      - file.name
+      - type
+      - section
+      - level
+      - order
+      - status

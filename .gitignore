@@ -1,0 +1,5 @@
+node_modules/
+tools/visuals/dist/
+.DS_Store
+__pycache__/
+.obsidian/workspace.json

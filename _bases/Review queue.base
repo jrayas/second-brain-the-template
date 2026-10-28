@@ -1,0 +1,15 @@
+filters:
+  and:
+    - domain == "starter"
+    - verified == false
+views:
+  - type: table
+    name: Review queue
+    groupBy:
+      property: confidence
+      direction: ASC
+    order:
+      - file.name
+      - type
+      - section
+      - confidence

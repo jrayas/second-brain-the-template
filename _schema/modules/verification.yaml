@@ -1,0 +1,24 @@
+module: verification
+description: Honest record of who wrote a note and whether a person has checked it.
+properties:
+  ai_generated:
+    type: boolean
+    default: false
+    description: True when the note was written by an AI. Notes written by hand keep the default.
+  generated_by:
+    type: string
+    description: Tool or model that wrote the note.
+  verified:
+    type: boolean
+    default: false
+    description: True only after a person has checked the note.
+  verified_by:
+    type: string
+  references:
+    type: list
+    items: string
+    description: Real, verifiable references (books, application notes by title).
+  standards:
+    type: list
+    items: string
+    description: Standards named for the reader to consult, for example IPC-2221. Never quoted.

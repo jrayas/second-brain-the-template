@@ -1,0 +1,771 @@
+/* @settings
+name: minilite
+id: minilite
+settings:
+    -
+        id: ans-accent
+        title: Accent colour
+        description: Needs the Style Settings plugin. The default is Finder blue in light mode and Notes yellow in dark mode.
+        type: class-select
+        allowEmpty: false
+        default: ans-default
+        options:
+            -
+                label: Default (Finder blue in light, Notes yellow in dark)
+                value: ans-default
+            -
+                label: Yellow in both modes
+                value: ans-yellow
+            -
+                label: Yellow with blue links (Notes + Finder)
+                value: ans-yellow-blue
+            -
+                label: Blue (Finder)
+                value: ans-blue
+            -
+                label: Green
+                value: ans-green
+            -
+                label: Purple
+                value: ans-purple
+*/
+
+/* ==========================================================================
+   minilite
+   An Apple-inspired, minimal Obsidian theme: a macOS Notes look for the
+   workspace and a Finder-style tab strip.
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Root tokens (fonts are left to Obsidian's defaults)
+   ========================================================================== */
+body {
+  --ans-radius-s: 6px;
+  --ans-radius-m: 10px;
+  --ans-radius-l: 14px;
+  --ans-radius-full: 999px;
+
+  --ans-gap: 8px;           /* margin around the inset sidebar panel */
+  --ans-tab-height: 30px;
+
+}
+
+/* ==========================================================================
+   2. Dark palette
+   ========================================================================== */
+.theme-dark {
+  --ans-bg: #1e1f22;
+  --ans-sidebar: #232428;
+  --ans-tab-strip: var(--ans-actions-bg);   /* same colour as the reading-mode / three-dots capsule */
+  --ans-tab-divider: rgba(255, 255, 255, 0.16);
+  --ans-tab-active: #43444a;
+  --ans-tab-active-outline: rgba(255, 255, 255, 0.14);
+  --ans-tab-shadow: none;
+  --ans-text: #f2f2f7;
+  --ans-text-muted: #98989f;
+  --ans-accent: #ffd75e;
+  --ans-accent-hover: #ffe38a;
+  --ans-select-fill: #cfae45;
+  --ans-select-text: #1e1f22;
+  --ans-folder-fill: rgba(255, 215, 94, 0.16);
+  --ans-divider: rgba(255, 255, 255, 0.08);
+  --ans-hover: rgba(255, 255, 255, 0.06);
+  --ans-tab-hover: rgba(255, 255, 255, 0.08);
+  /* Side panel (file explorer, switcher icons) */
+  --ans-side-hover: rgba(255, 255, 255, 0.06);
+  --ans-side-select-bg: rgba(255, 255, 255, 0.1);
+  --ans-side-select-text: var(--ans-text);
+  /* Tabs */
+  --ans-tab-select-bg: var(--ans-tab-active);
+  --ans-tab-press-bg: var(--ans-folder-fill);
+  /* Breadcrumb path in the view header */
+  --ans-crumb-hover-bg: rgba(255, 255, 255, 0.06);
+  --ans-crumb-hover-text: var(--ans-accent);
+  --ans-crumb-press-bg: var(--ans-folder-fill);
+  --ans-crumb-press-text: var(--ans-accent-hover);
+  /* Reading-mode toggle and three-dots capsule in the view header */
+  --ans-actions-bg: #232428;
+  --ans-actions-hover: rgba(255, 255, 255, 0.08);
+  --ans-actions-press: rgba(255, 255, 255, 0.14);
+  --ans-on-accent: #1e1f22;
+}
+
+/* ==========================================================================
+   3. Light palette
+   ========================================================================== */
+.theme-light {
+  --ans-bg: #ffffff;
+  --ans-sidebar: #f8f8f6;           /* milk white */
+  --ans-tab-strip: var(--ans-actions-bg);   /* same colour as the reading-mode / three-dots capsule */
+  --ans-tab-divider: rgba(0, 0, 0, 0.16);
+  --ans-tab-active: #ffffff;
+  --ans-tab-active-outline: rgba(0, 0, 0, 0.14);
+  --ans-tab-shadow: 0 1px 3px rgba(0, 0, 0, 0.14);
+  --ans-text: #1c1c1e;
+  --ans-text-muted: #6e6e73;
+  --ans-accent: #007aff;           /* Apple system blue, as used by Finder */
+  --ans-accent-hover: #0062cc;
+  --ans-select-fill: #d6e7ff;
+  --ans-select-text: #0050b3;
+  --ans-folder-fill: rgba(0, 122, 255, 0.14);
+  --ans-divider: rgba(0, 0, 0, 0.08);
+  --ans-hover: rgba(60, 60, 67, 0.08);       /* Apple label grey: neutral, sits well beside the blue */
+  --ans-tab-hover: rgba(60, 60, 67, 0.07);
+  /* Side panel (file explorer, switcher icons) */
+  --ans-side-hover: rgba(60, 60, 67, 0.08);
+  --ans-side-select-bg: rgba(60, 60, 67, 0.12);
+  --ans-side-select-text: var(--ans-text);
+  /* Tabs */
+  --ans-tab-select-bg: var(--ans-tab-active);
+  --ans-tab-press-bg: var(--ans-folder-fill);
+  /* Breadcrumb path in the view header */
+  --ans-crumb-hover-bg: rgba(60, 60, 67, 0.08);
+  --ans-crumb-hover-text: var(--ans-accent);
+  --ans-crumb-press-bg: var(--ans-folder-fill);
+  --ans-crumb-press-text: var(--ans-accent-hover);
+  /* Reading-mode toggle and three-dots capsule in the view header */
+  --ans-actions-bg: #f8f8f6;
+  --ans-actions-hover: rgba(60, 60, 67, 0.08);
+  --ans-actions-press: rgba(60, 60, 67, 0.14);
+  --ans-on-accent: #ffffff;
+}
+
+/* Map tokens onto Obsidian's variables */
+.theme-dark,
+.theme-light {
+  --background-primary: var(--ans-bg);
+  --background-primary-alt: var(--ans-sidebar);
+  --background-secondary: var(--ans-bg);
+  --background-secondary-alt: var(--ans-bg);
+  --background-modifier-border: var(--ans-divider);
+  --background-modifier-border-hover: var(--ans-divider);
+  --background-modifier-hover: var(--ans-hover);
+
+  --text-normal: var(--ans-text);
+  --text-muted: var(--ans-text-muted);
+  --text-faint: var(--ans-text-muted);
+  --text-accent: var(--ans-accent);
+  --text-accent-hover: var(--ans-accent-hover);
+  --text-on-accent: var(--ans-on-accent);
+
+  --interactive-accent: var(--ans-accent);
+  --interactive-accent-hover: var(--ans-accent-hover);
+
+  --divider-color: var(--ans-divider);
+  --titlebar-background: var(--ans-bg);
+  --titlebar-background-focused: var(--ans-bg);
+
+  --radius-s: var(--ans-radius-s);
+  --radius-m: var(--ans-radius-m);
+  --radius-l: var(--ans-radius-l);
+
+  /* Headings */
+  --h1-size: 2em;
+  --h1-weight: 700;
+  --h2-size: 1.5em;
+  --h2-weight: 700;
+  --h3-size: 1.25em;
+  --h3-weight: 600;
+  --h4-weight: 600;
+  --h5-weight: 600;
+  --h6-weight: 600;
+  --line-height-normal: 1.7;
+}
+
+/* --------------------------------------------------------------------------
+   Accent variants (pick with the Style Settings plugin; yellow is the default)
+   -------------------------------------------------------------------------- */
+body.theme-dark.ans-blue {
+  --ans-accent: #0a84ff; --ans-accent-hover: #409cff;
+  --ans-select-fill: #1f4f8f; --ans-select-text: #ffffff;
+  --ans-folder-fill: rgba(10, 132, 255, 0.18); --ans-on-accent: #ffffff;
+}
+body.theme-light.ans-blue {
+  --ans-accent: #007aff; --ans-accent-hover: #0062cc;
+  --ans-select-fill: #d6e7ff; --ans-select-text: #0050b3;
+  --ans-folder-fill: rgba(0, 122, 255, 0.14); --ans-on-accent: #ffffff;
+}
+/* Light mode is Finder blue by default; these bring the Notes yellow back */
+body.theme-light.ans-yellow,
+body.theme-light.ans-yellow-blue {
+  --ans-accent: #8a6700; --ans-accent-hover: #6f5300;
+  --ans-select-fill: #fbeeb6; --ans-select-text: #5c4500;
+  --ans-folder-fill: rgba(201, 154, 6, 0.16);
+}
+body.theme-dark.ans-green {
+  --ans-accent: #30d158; --ans-accent-hover: #5fe07e;
+  --ans-select-fill: #2f7a45; --ans-select-text: #ffffff;
+  --ans-folder-fill: rgba(48, 209, 88, 0.16); --ans-on-accent: #0f1f14;
+}
+body.theme-light.ans-green {
+  --ans-accent: #1c7c3a; --ans-accent-hover: #146029;
+  --ans-select-fill: #d4f1dc; --ans-select-text: #14532b;
+  --ans-folder-fill: rgba(28, 124, 58, 0.12); --ans-on-accent: #ffffff;
+}
+body.theme-dark.ans-purple {
+  --ans-accent: #bf5af2; --ans-accent-hover: #d084f7;
+  --ans-select-fill: #7a3fa0; --ans-select-text: #ffffff;
+  --ans-folder-fill: rgba(191, 90, 242, 0.18); --ans-on-accent: #1e1f22;
+}
+body.theme-light.ans-purple {
+  --ans-accent: #8944ab; --ans-accent-hover: #6d3389;
+  --ans-select-fill: #ecdcf5; --ans-select-text: #55257a;
+  --ans-folder-fill: rgba(137, 68, 171, 0.12); --ans-on-accent: #ffffff;
+}
+/* Yellow selection, Finder-blue links */
+body.theme-dark.ans-yellow-blue { --link-color: #409cff; --link-external-color: #409cff; }
+body.theme-light.ans-yellow-blue { --link-color: #007aff; --link-external-color: #007aff; }
+
+/* ==========================================================================
+   4. Tab strip (Finder style)
+   ========================================================================== */
+.theme-dark,
+.theme-light {
+  --tab-container-background: transparent;
+  --tab-background-active: var(--ans-tab-active);
+  --tab-text-color: var(--ans-text-muted);
+  --tab-text-color-active: var(--ans-text);
+  --tab-text-color-focused: var(--ans-text-muted);
+  --tab-text-color-focused-active: var(--ans-text);
+  --tab-text-color-focused-highlighted: var(--ans-text);
+  --tab-text-color-focused-active-current: var(--ans-text);
+  --tab-font-size: 12px;
+  --tab-font-weight: 500;
+  --tab-radius: var(--ans-radius-s);
+  --tab-radius-active: var(--ans-radius-s);
+  --tab-curve: 0px;
+  --tab-outline-width: 1px;
+  --tab-outline-color: var(--ans-tab-active-outline);
+  --tab-divider-color: transparent;
+  --tab-width: 200px;
+  --tab-max-width: 100%;
+}
+
+/* The strip itself: full-width rounded capsule with a gap for the "+" button */
+.mod-root .workspace-tabs:not(.mod-stacked) .workspace-tab-header-container {
+  height: calc(var(--ans-tab-height) + 8px);
+  padding: 0 var(--ans-gap);
+  margin: 4px 0;
+  background: transparent;
+  border: 0;
+  align-items: center;
+  gap: 8px;
+}
+
+.mod-root .workspace-tabs:not(.mod-stacked) .workspace-tab-header-spacer {
+  display: none;
+}
+
+.mod-root .workspace-tabs:not(.mod-stacked) .workspace-tab-header-container-inner {
+  flex: 1 1 0;
+  width: auto;
+  max-width: none;
+  min-width: 0;
+  height: var(--ans-tab-height);
+  margin: 0;
+  padding: 3px;
+  gap: 0;
+  background: var(--ans-tab-strip);
+  border-radius: 8px;
+  align-items: stretch;
+}
+
+/* Equal-width tabs with centred titles */
+.mod-root .workspace-tabs:not(.mod-stacked) .workspace-tab-header {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: none;
+  width: auto;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+/* Remove the default inverted-corner curves on the active tab */
+.mod-root .workspace-tabs:not(.mod-stacked) .workspace-tab-header::before,
+.mod-root .workspace-tabs:not(.mod-stacked) .workspace-tab-header::after,
+.mod-root .workspace-tabs:not(.mod-stacked) .workspace-tab-header.is-active::before,
+.mod-root .workspace-tabs:not(.mod-stacked) .workspace-tab-header.is-active::after {
+  display: none;
+}
+
+.mod-root .workspace-tabs:not(.mod-stacked) .workspace-tab-header-inner {
+  height: 100%;
+  padding: 0 22px;
+  justify-content: center;
+  border-radius: 8px;
+  position: relative;
+}
+
+.mod-root .workspace-tabs:not(.mod-stacked) .workspace-tab-header-inner-title {
+  flex: 0 1 auto;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* Hide the tab icon so titles sit centred, as in Finder */
+.mod-root .workspace-tabs:not(.mod-stacked) .workspace-tab-header-inner-icon {
+  display: none;
+}
+
+/* Active pill */
+.mod-root .workspace-tabs:not(.mod-stacked) .workspace-tab-header.is-active {
+  background: var(--ans-tab-active);
+  box-shadow: inset 0 0 0 1px var(--ans-tab-active-outline), var(--ans-tab-shadow);
+}
+
+/* Inactive hover: a gentle wash only */
+.mod-root .workspace-tabs:not(.mod-stacked) .workspace-tab-header:not(.is-active):hover {
+  background: var(--ans-tab-hover);
+}
+
+/* Colour states, repeated by selector so unfocused windows stay consistent */
+.mod-root .workspace-tabs:not(.mod-stacked) .workspace-tab-header .workspace-tab-header-inner-title {
+  color: var(--ans-text-muted);
+}
+.mod-root .workspace-tabs:not(.mod-stacked) .workspace-tab-header.is-active .workspace-tab-header-inner-title {
+  color: var(--ans-text);
+}
+
+/* Close button only on hover, overlaid at the right edge */
+.mod-root .workspace-tabs:not(.mod-stacked) .workspace-tab-header-inner-close-button {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: opacity 0.12s ease;
+}
+.mod-root .workspace-tabs:not(.mod-stacked) .workspace-tab-header:hover .workspace-tab-header-inner-close-button {
+  opacity: 1;
+}
+
+/* Circular "+" at the far right, outside the strip */
+.mod-root .workspace-tabs:not(.mod-stacked) .workspace-tab-header-new-tab {
+  flex: 0 0 auto;
+  margin: 0;
+  width: var(--ans-tab-height);
+  height: var(--ans-tab-height);
+  background: var(--ans-tab-strip);
+  border-radius: var(--ans-radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mod-root .workspace-tabs:not(.mod-stacked) .workspace-tab-header-new-tab .clickable-icon {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border-radius: var(--ans-radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ans-text-muted);
+}
+.mod-root .workspace-tabs:not(.mod-stacked) .workspace-tab-header-new-tab:hover .clickable-icon {
+  color: var(--ans-text);
+  background: var(--ans-tab-hover);
+}
+
+/* ==========================================================================
+   5. Sidebar and file explorer (Notes style)
+   ========================================================================== */
+/* Flat, edge-to-edge sidebars: no inset container, border or rounded corners */
+.workspace-split.mod-left-split,
+.workspace-split.mod-right-split {
+  background: var(--ans-bg);
+}
+.workspace-split.mod-left-split .workspace-tabs,
+.workspace-split.mod-right-split .workspace-tabs {
+  background: var(--ans-bg);
+}
+.workspace-split.mod-left-split .workspace-tab-container,
+.workspace-split.mod-right-split .workspace-tab-container {
+  padding: 0;
+  box-sizing: border-box;
+}
+.workspace-split.mod-left-split .workspace-leaf,
+.workspace-split.mod-right-split .workspace-leaf {
+  background: transparent;
+}
+.workspace-split.mod-left-split .workspace-leaf-content,
+.workspace-split.mod-right-split .workspace-leaf-content {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+}
+.workspace-split.mod-left-split .workspace-tabs,
+.workspace-split.mod-right-split .workspace-tabs {
+  background: var(--ans-bg);
+}
+/* Keep the sidebar panel switchers (files, search, bookmarks, outline...) visible */
+.workspace-split.mod-left-split .workspace-tab-header-container,
+.workspace-split.mod-right-split .workspace-tab-header-container {
+  background: transparent;
+  border: 0;
+  padding: 4px 8px 0;
+}
+.workspace-split.mod-left-split .workspace-tab-header.is-active,
+.workspace-split.mod-right-split .workspace-tab-header.is-active {
+  background: var(--ans-side-select-bg);
+  border-radius: var(--ans-radius-s);
+}
+.workspace-split.mod-left-split .workspace-tab-header.is-active .workspace-tab-header-inner-icon,
+.workspace-split.mod-right-split .workspace-tab-header.is-active .workspace-tab-header-inner-icon {
+  color: var(--ans-accent);
+}
+
+.theme-dark,
+.theme-light {
+  --nav-item-size: 14px;
+  --nav-item-weight: 400;
+  --nav-item-color: var(--ans-text);
+  --nav-item-color-hover: var(--ans-text);
+  --nav-item-color-active: var(--ans-side-select-text);
+  --nav-item-color-selected: var(--ans-side-select-text);
+  --nav-item-background-hover: var(--ans-side-hover);
+  --nav-item-background-active: var(--ans-side-select-bg);
+  --nav-item-background-selected: var(--ans-side-select-bg);
+  --nav-collapse-icon-color: var(--ans-text-muted);
+  --nav-collapse-icon-color-collapsed: var(--ans-text-muted);
+  --nav-indentation-guide-color: var(--ans-divider);
+}
+
+.nav-folder-title,
+.nav-file-title {
+  border-radius: var(--ans-radius-s);
+  margin: 1px 6px;
+}
+.nav-file-title.is-active,
+.nav-folder-title.is-active {
+  background: var(--ans-side-select-bg);
+  color: var(--ans-side-select-text);
+  font-weight: 400;
+}
+.nav-file-title.is-active .nav-file-title-content,
+.nav-folder-title.is-active .nav-folder-title-content {
+  color: var(--ans-accent);
+}
+
+/* Small grey section labels */
+.tree-item.nav-folder.mod-root > .nav-folder-title,
+.nav-header .nav-buttons-container,
+.nav-files-container .nav-folder.mod-root > .nav-folder-title .nav-folder-title-content {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ans-text-muted);
+}
+
+/* ==========================================================================
+   6. Editor and headings
+   ========================================================================== */
+.theme-dark,
+.theme-light {
+  --file-line-width: 720px;
+  --file-margins: 32px;
+}
+
+.inline-title {
+  font-size: 2em;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ans-text);
+}
+
+.markdown-preview-view,
+.markdown-source-view.mod-cm6 {
+  --p-spacing: 0.9em;
+}
+
+.markdown-rendered hr,
+.cm-s-obsidian hr {
+  border-color: var(--ans-divider);
+}
+
+/* ==========================================================================
+   7. View header and toolbar
+   ========================================================================== */
+.view-header {
+  background: var(--ans-bg);
+  border-bottom: 0;
+}
+.view-header-title {
+  font-weight: 600;
+  text-align: center;
+}
+.view-header .view-actions .clickable-icon,
+.view-header .view-header-nav-buttons .clickable-icon {
+  border-radius: var(--ans-radius-full);
+}
+
+/* Capsule groupings for header actions */
+.view-header .view-actions {
+  background: var(--ans-actions-bg);
+  border-radius: var(--ans-radius-full);
+  padding: 0 4px;
+  margin: 4px 0;
+}
+
+/* Rounded search field */
+.search-input-container input,
+input[type="search"] {
+  border-radius: var(--ans-radius-full);
+  background: var(--ans-hover);
+  border: 1px solid transparent;
+  padding-left: 30px;
+}
+.search-input-container input:focus,
+input[type="search"]:focus {
+  border-color: var(--ans-accent);
+  box-shadow: none;
+}
+
+/* Status bar and buttons */
+/* Solid container, no border: floating status text never overlaps note text */
+.status-bar {
+  --status-bar-background: var(--ans-bg);
+  --status-bar-border-width: 0;
+  background: var(--ans-bg);
+  border: 0;
+  border-radius: var(--ans-radius-m);
+  padding: 4px 10px;
+}
+button.mod-cta {
+  border-radius: var(--ans-radius-full);
+  color: var(--ans-on-accent);
+}
+
+/* ==========================================================================
+   Seamless top bar: ribbon and title bar share one flat background
+   ========================================================================== */
+.titlebar,
+.titlebar-inner,
+.workspace-ribbon.mod-left,
+.workspace-ribbon.mod-right {
+  background: var(--ans-bg);
+  border: 0;
+}
+/* Obsidian draws a boxed section at the top of the left ribbon; flatten it */
+.workspace-ribbon.mod-left::before {
+  background: var(--ans-bg);
+  border: 0;
+}
+.workspace-ribbon.mod-left,
+.workspace-ribbon.mod-left.is-collapsed {
+  --ribbon-background: var(--ans-bg);
+  --ribbon-background-collapsed: var(--ans-bg);
+}
+/* Resize handles and pane borders disappear; the inset panels carry the edges */
+.theme-dark,
+.theme-light {
+  --divider-color: transparent;
+  --divider-width: 0px;
+  --ribbon-background: var(--ans-bg);
+  --ribbon-background-collapsed: var(--ans-bg);
+}
+.workspace-split.mod-vertical > .workspace-leaf-resize-handle,
+.workspace-split.mod-left-split > .workspace-leaf-resize-handle,
+.workspace-split.mod-right-split > .workspace-leaf-resize-handle {
+  border: 0;
+}
+
+/* Remove the horizontal line across the top of the left ribbon */
+body .workspace-ribbon.mod-left::before,
+body .workspace-ribbon.mod-left:before {
+  display: none;
+  border: 0;
+  box-shadow: none;
+  background: var(--ans-bg);
+}
+body .workspace-ribbon.mod-left,
+body .workspace-ribbon.mod-left.is-collapsed {
+  border: 0;
+  box-shadow: none;
+}
+
+/* Belt and braces: kill every line source around the ribbon */
+.workspace-ribbon {
+  --tab-outline-color: transparent;
+  --divider-color: transparent;
+  --background-modifier-border: transparent;
+}
+.workspace-ribbon .side-dock-actions,
+.workspace-ribbon .side-dock-settings {
+  border: 0;
+  box-shadow: none;
+}
+
+/* ==========================================================================
+   Alignment: both sidebars mirror each other (header row, then inset panel)
+   ========================================================================== */
+/* One height and one vertical centre for every top row */
+.workspace-split.mod-left-split .workspace-tab-header-container,
+.workspace-split.mod-right-split .workspace-tab-header-container,
+.mod-root .workspace-tabs:not(.mod-stacked) .workspace-tab-header-container {
+  height: 40px;
+  margin: 0;
+  box-sizing: border-box;
+  align-items: center;
+}
+.workspace-split.mod-left-split .workspace-tab-header-container,
+.workspace-split.mod-right-split .workspace-tab-header-container {
+  /* line the first icon up with the text inside the panel below */
+  padding: 0 16px;
+}
+.workspace-split.mod-left-split .workspace-tab-header-container-inner,
+.workspace-split.mod-right-split .workspace-tab-header-container-inner {
+  align-items: center;
+  gap: 2px;
+}
+
+/* Right panel ends above the status bar so "0 backlinks" no longer collides with its edge */
+.workspace-split.mod-right-split .workspace-tab-container {
+  /* status bar height plus the left vault-profile row, so both panels end level */
+  padding-bottom: 41px;
+}
+
+/* No container in either mode; a single hairline divider separates each sidebar from the editor */
+.workspace-split.mod-left-split .workspace-leaf-content,
+.workspace-split.mod-right-split .workspace-leaf-content {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+.workspace-split.mod-left-split {
+  border-right: 1px solid var(--ans-divider);
+}
+/* Ribbon divider: same hairline as the right panel. Obsidian 1.14 marks the left ribbon .mod-primary (not .mod-left); it already starts below the 40px top row, so the line clears the macOS window controls */
+body .workspace-ribbon.mod-primary {
+  border-right: 1px solid var(--ans-divider);
+}
+.workspace-split.mod-right-split {
+  border-left: 1px solid var(--ans-divider);
+}
+
+/* Bottom row: vault profile (left) down a little, status bar (right) up a little, so they share one baseline */
+.workspace-split.mod-left-split .workspace-sidedock-vault-profile {
+  transform: translateY(4px);
+}
+.status-bar {
+  transform: translateY(-4px);
+}
+
+/* Terminal-style tab strip: solid rounded strip, thin dividers between inactive tabs, white rounded active tab */
+.mod-root .workspace-tabs:not(.mod-stacked) .workspace-tab-header {
+  position: relative;
+}
+.mod-root .workspace-tabs:not(.mod-stacked) .workspace-tab-header + .workspace-tab-header:not(.is-active)::before {
+  display: block;
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 22%;
+  height: 56%;
+  width: 1px;
+  background: var(--ans-tab-divider);
+}
+/* No divider beside the active pill */
+.mod-root .workspace-tabs:not(.mod-stacked) .workspace-tab-header.is-active + .workspace-tab-header::before {
+  display: none;
+}
+
+/* Taller panels: +10px at the top, +15px at the bottom, identical on both sides */
+.workspace-split.mod-left-split .workspace-tab-container,
+.workspace-split.mod-right-split .workspace-tab-container {
+  margin-top: -10px;
+  position: relative;
+  z-index: 2;                         /* panel paints above the header row it overlaps */
+}
+.workspace-split.mod-left-split .workspace-tab-header-container,
+.workspace-split.mod-right-split .workspace-tab-header-container {
+  position: relative;
+  z-index: 1;
+}
+.workspace-split.mod-left-split .workspace-tabs {
+  margin-bottom: -15px;               /* panel reaches down over the vault-profile row's empty top edge */
+}
+.workspace-split.mod-right-split .workspace-tab-container {
+  padding-bottom: calc(8px + 41px - 15px);
+}
+
+/* ==========================================================================
+   Breadcrumb path ("Scene / Fantastic five") and tab hover / click states
+   ========================================================================== */
+/* Path text uses the reading-mode text colour; hover and press turn it Finder blue */
+.view-header-breadcrumb,
+.view-header-title-parent {
+  color: var(--text-normal);
+  border-radius: var(--ans-radius-s);
+  transition: color 0.12s ease, background-color 0.12s ease;
+}
+.view-header-breadcrumb-separator {
+  color: var(--ans-text-muted);
+}
+.view-header-breadcrumb:hover {
+  color: var(--ans-crumb-hover-text);
+  background: var(--ans-crumb-hover-bg);
+}
+.view-header-breadcrumb:active {
+  color: var(--ans-crumb-press-text);
+  background: var(--ans-crumb-press-bg);
+}
+.view-header-title {
+  color: var(--text-normal);
+}
+
+/* Tabs: hover brightens the label, a click gives a firmer lift */
+.mod-root .workspace-tabs:not(.mod-stacked) .workspace-tab-header:not(.is-active):hover .workspace-tab-header-inner-title {
+  color: var(--ans-text);
+}
+.mod-root .workspace-tabs:not(.mod-stacked) .workspace-tab-header:not(.is-active):active {
+  background: var(--ans-tab-active);
+  box-shadow: inset 0 0 0 1px var(--ans-tab-active-outline);
+}
+.mod-root .workspace-tabs:not(.mod-stacked) .workspace-tab-header-new-tab:active .clickable-icon {
+  color: var(--ans-accent);
+  background: var(--ans-tab-press-bg);
+}
+.mod-root .workspace-tabs:not(.mod-stacked) .workspace-tab-header-new-tab:hover .clickable-icon {
+  color: var(--ans-accent);
+}
+
+/* Obsidian also tints the inner tab on hover; keep that transparent so only the tab itself changes colour */
+.mod-root .workspace-tabs:not(.mod-stacked) .workspace-tab-header-inner:hover,
+.mod-root .workspace-tabs:not(.mod-stacked) .workspace-tab-header:not(.is-active):hover .workspace-tab-header-inner {
+  background: transparent;
+}
+
+/* Reading-mode and three-dots buttons: their own hover and press colours */
+.view-header .view-actions .clickable-icon:hover {
+  background: var(--ans-actions-hover);
+}
+.view-header .view-actions .clickable-icon:active,
+.view-header .view-actions .clickable-icon.is-active {
+  background: var(--ans-actions-press);
+}
+
+/* ==========================================================================
+   Windows only
+   Windows draws its own title bar and puts the tab strip in the same top row,
+   so the title bar must stay transparent and the strip must sit in front.
+   macOS is untouched by this block.
+   ========================================================================== */
+body.mod-windows .titlebar,
+body.mod-windows .titlebar-inner {
+  background: transparent;
+  border: 0;
+}
+body.mod-windows .mod-root .workspace-tabs:not(.mod-stacked) .workspace-tab-header-container {
+  position: relative;
+  z-index: 3;
+}
+/* Window buttons (minimise, maximise, close) sit in the top-right corner: start both panels
+   below that row so the buttons never cover a panel corner or its outline */
+body.mod-windows .workspace-split.mod-left-split .workspace-tab-container,
+body.mod-windows .workspace-split.mod-right-split .workspace-tab-container {
+  margin-top: 0;
+}

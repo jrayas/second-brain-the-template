@@ -1,0 +1,10 @@
+# The knowledge domains, registered like types. The plugin never writes this file.
+#   prefix       two capital letters used in unique_id (KB-ST-2026-0001). A domain without one gets no unique ID
+#   folder       the folder name that means this domain, below a type's root folder (default: the domain's own name)
+#   description  free text for people
+# To add a domain: add a line here (slug, prefix, description), then add override files only where it differs.
+# `starter` is a placeholder that makes the empty template valid. The first real domain replaces it
+# (see _template/knowledge/new-domain.md, "First domain"); after that, domains are only appended.
+default: starter           # the domain of a note that has none and is not in a domain folder
+domains:
+  starter:  { prefix: ST, description: Placeholder domain for the empty template. }

@@ -1,0 +1,30 @@
+type: exercise
+description: A question to attempt, with hidden hints and a hidden answer.
+uses: [base, findability, relations, review, domain, curriculum, pathways, verification]
+overrides:
+  status:
+    values: [draft, review, published, outdated, archived]
+    default: draft
+properties:
+  difficulty:
+    type: enum
+    values: [beginner, intermediate, advanced, senior]
+    required: true
+  time_minutes:
+    type: integer
+    min: 1
+    required: true
+  tests:
+    type: list
+    items: link
+    target: kb
+    required: true
+    description: The concept notes this question checks.
+  answer_verified:
+    type: boolean
+    default: false
+    description: True only after a person has checked the hidden answer.
+  confidence:
+    type: enum
+    values: [low, medium, high]
+    default: medium

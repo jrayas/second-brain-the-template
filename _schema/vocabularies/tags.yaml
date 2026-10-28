@@ -1,0 +1,23 @@
+# Controlled tags. Key = preferred term; synonyms are replaced by it.
+# Add a new preferred term here BEFORE using it in a note. Never reuse a synonym as a term.
+# Keep terms general enough for several domains to reuse; domain-only terms go in vocabularies/tags/<domain>.yaml.
+vocabulary: tags
+terms:
+  fundamentals:
+    synonyms: [basics, foundations]
+  safety: {}
+  checklist: {}
+  troubleshooting:
+    synonyms: [debugging]
+  measurement:
+    synonyms: [measuring]
+  testing:
+    synonyms: [test]
+  planning: {}
+  standards:
+    synonyms: [standard]
+  quality: {}
+  risk: {}
+  tools: {}
+  terminology:
+    synonyms: [glossary-terms]

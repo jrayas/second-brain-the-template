@@ -1,0 +1,12 @@
+filters:
+  and:
+    - domain == "starter"
+    - type == "visual"
+views:
+  - type: table
+    name: Visuals
+    order:
+      - file.name
+      - kind
+      - tested
+      - formula_source

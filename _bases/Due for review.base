@@ -1,0 +1,11 @@
+filters:
+  and:
+    - domain == "starter"
+    - review_next != null
+views:
+  - type: table
+    name: Due for review
+    order:
+      - file.name
+      - review_next
+      - review_cycle

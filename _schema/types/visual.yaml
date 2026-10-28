@@ -1,0 +1,28 @@
+type: visual
+description: Stub note for an HTML page in Visuals/<domain>/html (a visual or a long-scroll lesson), so search and Bases can see it.
+uses: [base, findability, relations, review, domain, curriculum, pathways, verification]
+overrides:
+  status:
+    values: [draft, review, published, outdated, archived]
+    default: draft
+properties:
+  kind:
+    type: enum
+    values: [diagram, calculator, comparison, interactive-checklist, flow, lesson]
+    default: diagram
+  file:
+    type: string
+    required: true
+    pattern: '^Visuals/[a-z][a-z0-9]*/html/[a-z0-9][a-z0-9-]*\.html$'
+    description: Path of the HTML file, relative to the vault root. The folder after Visuals is the note's domain.
+  formula_source:
+    type: string
+    description: Where a calculator's formula comes from. Required for calculators.
+  tested:
+    type: boolean
+    default: false
+    description: True only if the page's built-in test cases were run and passed.
+  confidence:
+    type: enum
+    values: [low, medium, high]
+    default: medium

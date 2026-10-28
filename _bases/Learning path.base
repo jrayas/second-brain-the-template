@@ -1,0 +1,17 @@
+filters:
+  and:
+    - domain == "starter"
+    - track.contains("starter-first-path")
+views:
+  - type: table
+    name: Learning path
+    groupBy:
+      property: level
+      direction: ASC
+    order:
+      - file.name
+      - type
+      - section
+      - level
+      - order
+      - status

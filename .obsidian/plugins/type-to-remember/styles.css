@@ -1,0 +1,1513 @@
+/* Type to Remember. All classes are prefixed ttr- and use theme variables only. */
+
+/*
+ * Design layer: quiet, minimal controls. Everything is scoped under .ttr-ui (the plugin's own views) and
+ * built from Obsidian's variables, so it follows the theme in light and dark. The selectors carry enough
+ * specificity to beat Obsidian's default button style; the component rules below come after and win ties.
+ */
+.ttr-ui {
+	--ttr-hair: var(--background-modifier-border);
+	--ttr-tint: color-mix(in srgb, var(--interactive-accent) 14%, transparent);
+	--ttr-tint-strong: color-mix(in srgb, var(--interactive-accent) 24%, transparent);
+}
+
+.ttr-ui.ttr-ui button:where(:not(.clickable-icon, .ttr-day)) {
+	height: auto;
+	padding: var(--size-2-2) var(--size-4-3);
+	font-size: var(--font-ui-small);
+	font-weight: var(--font-normal);
+	color: var(--text-normal);
+	background: transparent;
+	border: 1px solid var(--ttr-hair);
+	border-radius: var(--radius-m);
+	box-shadow: none;
+	transition:
+		background-color 120ms ease,
+		border-color 120ms ease,
+		color 120ms ease;
+}
+
+.ttr-ui.ttr-ui button:where(:not(.clickable-icon, .ttr-day)):hover:not(:disabled) {
+	background: var(--background-modifier-hover);
+	border-color: var(--background-modifier-border-hover);
+}
+
+.ttr-ui.ttr-ui button:where(:not(.clickable-icon, .ttr-day)):focus-visible {
+	outline: 2px solid var(--interactive-accent);
+	outline-offset: 1px;
+	box-shadow: none;
+}
+
+.ttr-ui button:disabled {
+	opacity: 0.45;
+	cursor: not-allowed;
+}
+
+/* A primary action that cannot be used yet steps back to a quiet outline. */
+.ttr-ui button.mod-cta:disabled:not(.clickable-icon) {
+	opacity: 0.75;
+	color: var(--text-muted);
+	background: transparent;
+	border-color: var(--ttr-hair);
+}
+
+/* The one primary action on a screen. */
+/* The calendar's day cells are buttons too, but they keep their own square, colour-filled look (see .ttr-day). */
+
+/* The accent is darkened a little behind the button's text, so the text is readable (at least 4.5:1) in every theme. */
+.ttr-ui button.mod-cta:not(.clickable-icon) {
+	color: var(--text-on-accent);
+	background: color-mix(in srgb, var(--interactive-accent) 76%, black);
+	border-color: transparent;
+}
+
+.ttr-ui button.mod-cta:not(.clickable-icon):hover:not(:disabled) {
+	background: color-mix(in srgb, var(--interactive-accent-hover) 76%, black);
+	border-color: transparent;
+}
+
+/* Checkboxes match the text beside them. */
+.ttr-ui input[type='checkbox'] {
+	--checkbox-size: 15px;
+}
+
+/* Icon buttons keep Obsidian's own look but get a comfortable hit area. */
+.ttr-ui .clickable-icon {
+	min-width: 28px;
+	min-height: 28px;
+}
+
+.ttr-practice {
+	display: flex;
+	justify-content: center;
+	padding: var(--size-4-8) var(--size-4-4);
+}
+
+.ttr-column {
+	width: 100%;
+	max-width: 46rem;
+}
+
+/* Fit window: the practice column uses the whole pane, not a fixed reading width. */
+.ttr-column.ttr-fit {
+	max-width: none;
+}
+
+/* The options keep a readable width in every style, even when the text uses the whole pane. */
+.ttr-bar-host {
+	max-width: 46rem;
+}
+
+.ttr-body {
+	position: relative;
+}
+
+/* Measures the character width and the room for a line. Invisible and out of the way. */
+.ttr-probe {
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	visibility: hidden;
+	pointer-events: none;
+}
+
+.ttr-probe span {
+	white-space: nowrap;
+}
+
+.ttr-stats {
+	display: flex;
+	gap: var(--size-4-6);
+	align-items: baseline;
+	margin-bottom: var(--size-4-8);
+	color: var(--text-muted);
+	font-variant-numeric: tabular-nums;
+}
+
+.ttr-stat {
+	font-size: var(--font-ui-medium);
+}
+
+.ttr-stat-progress {
+	margin-left: auto;
+	font-size: var(--font-ui-small);
+	color: var(--text-muted);
+}
+
+.ttr-path {
+	margin-bottom: var(--size-4-4);
+	font-size: var(--font-ui-small);
+	color: var(--text-muted);
+}
+
+.ttr-line {
+	margin-bottom: var(--size-4-4);
+}
+
+/* The typing line when it sits below all the prompt lines. */
+.ttr-input-dock {
+	margin-top: var(--size-4-4);
+}
+
+/* Finished lines keep the width they were cut for, so they are clipped rather than wrapped if the pane shrinks. */
+.ttr-line-done {
+	opacity: 0.45;
+}
+
+.ttr-line-done .ttr-prompt {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+/* Upcoming lines fade with distance, so the nearest ones are easiest to read. */
+.ttr-ahead-1 {
+	opacity: 0.8;
+}
+
+.ttr-ahead-2 {
+	opacity: 0.65;
+}
+
+.ttr-ahead-3 {
+	opacity: 0.5;
+}
+
+.ttr-ahead-4 {
+	opacity: 0.4;
+}
+
+/* Line style text: the larger size and wider word spacing of the Race style. Prompt, input and drawn text share them so characters line up. */
+.ttr-practice {
+	--ttr-line-size: calc(var(--font-text-size) * 1.15);
+	--ttr-word-space: 0.5em;
+}
+
+.ttr-prompt {
+	/* Same horizontal padding and border as the input, so each prompt character sits above the one typed under it. */
+	padding: 0 var(--size-4-2);
+	border: 1px solid transparent;
+	font-family: var(--font-monospace);
+	font-size: var(--ttr-line-size);
+	word-spacing: var(--ttr-word-space);
+	line-height: var(--line-height-normal);
+	white-space: pre-wrap;
+	color: var(--text-faint);
+}
+
+/* A space is drawn as a centre dot laid over the real space, so copying and screen readers still see a space. */
+.ttr-space {
+	position: relative;
+}
+
+/* A drawn dot, not a glyph: centred across the space and at mid height, well above a full stop's baseline. */
+.ttr-space::after {
+	content: "";
+	position: absolute;
+	top: 45%;
+	left: 50%;
+	width: 0.2em;
+	height: 0.2em;
+	border-radius: 50%;
+	background-color: currentcolor;
+	transform: translate(-50%, -50%);
+}
+
+.ttr-char.ttr-pending {
+	color: var(--text-muted);
+}
+
+.ttr-char.ttr-correct {
+	color: var(--text-normal);
+}
+
+/* A wrong character, or a wrong space (its dot), turns the error colour. No box, as in Monkeytype. */
+.ttr-char.ttr-wrong {
+	color: var(--text-error);
+}
+
+/* Two classes, so Obsidian's own text-input styling (font, padding, height) does not win. */
+/* The input is invisible text over a drawn copy (.ttr-typed), which can draw a typed space as a dot. */
+.ttr-input-wrap {
+	position: relative;
+	width: calc(var(--ttr-line-chars, 1) * 1ch + 2 * var(--size-4-2) + 2px);
+	max-width: 100%;
+	font-family: var(--font-monospace);
+	font-size: var(--ttr-line-size);
+	margin-top: var(--size-4-1);
+}
+
+.ttr-practice .ttr-input {
+	/* As wide as the prompt line: its characters, plus the same padding and border as the prompt. */
+	width: 100%;
+	box-sizing: border-box;
+	margin: 0;
+	height: auto;
+	padding: 0 var(--size-4-2);
+	font-family: var(--font-monospace);
+	font-size: var(--ttr-line-size);
+	line-height: var(--line-height-normal);
+	color: transparent;
+	word-spacing: var(--ttr-word-space);
+	caret-color: var(--text-accent);
+	background-color: var(--background-secondary);
+	border: 1px solid transparent;
+	border-radius: var(--radius-s);
+}
+
+.ttr-typed {
+	position: absolute;
+	inset: 0;
+	box-sizing: border-box;
+	padding: 0 var(--size-4-2);
+	border: 1px solid transparent;
+	overflow: hidden;
+	font-family: var(--font-monospace);
+	font-size: var(--ttr-line-size);
+	word-spacing: var(--ttr-word-space);
+	line-height: var(--line-height-normal);
+	white-space: pre;
+	pointer-events: none;
+}
+
+/* While an input method is composing, the input shows its own text and the copy steps aside. */
+.ttr-practice .ttr-input.ttr-composing {
+	color: var(--text-normal);
+}
+
+.ttr-input.ttr-composing + .ttr-typed {
+	visibility: hidden;
+}
+
+.ttr-practice .ttr-input:focus {
+	border-color: var(--interactive-accent);
+	box-shadow: none;
+}
+
+.ttr-foot {
+	margin-top: var(--size-4-8);
+	font-size: var(--font-ui-smaller);
+	color: var(--text-muted);
+}
+
+.ttr-overlay {
+	margin-top: var(--size-4-4);
+	padding: var(--size-4-4);
+	border: 1px solid var(--background-modifier-border);
+	border-radius: var(--radius-m);
+	background-color: var(--background-secondary);
+}
+
+/* Wins over any later display rule, so a hidden element is never left showing. */
+.ttr-hidden {
+	display: none !important;
+}
+
+.ttr-actions {
+	display: flex;
+	gap: var(--size-4-2);
+	margin-top: var(--size-4-4);
+}
+
+.ttr-message {
+	max-width: 32rem;
+	margin: var(--size-4-12) auto;
+	text-align: center;
+	color: var(--text-muted);
+}
+
+.ttr-message h3,
+.ttr-message h4 {
+	margin-bottom: var(--size-4-2);
+	font-size: var(--font-ui-large);
+	font-weight: var(--font-medium);
+	color: var(--text-normal);
+}
+
+.ttr-results h2 {
+	margin-bottom: var(--size-4-6);
+}
+
+.ttr-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: var(--size-4-4);
+}
+
+.ttr-cell {
+	padding: var(--size-4-3) var(--size-4-4);
+	border: 1px solid var(--background-modifier-border);
+	border-radius: var(--radius-m);
+}
+
+.ttr-cell-value {
+	font-size: var(--font-ui-larger);
+	font-weight: var(--font-semibold);
+	color: var(--text-normal);
+	font-variant-numeric: tabular-nums;
+}
+
+.ttr-cell-label {
+	font-size: var(--font-ui-smaller);
+	color: var(--text-muted);
+}
+
+.ttr-weak {
+	margin-top: var(--size-4-6);
+}
+
+.ttr-note {
+	font-size: var(--font-ui-small);
+	color: var(--text-muted);
+}
+
+/* Pre-session bar */
+.ttr-bar {
+	margin-bottom: var(--size-4-6);
+	padding: 0 0 var(--size-4-2);
+	border-bottom: 1px solid var(--background-modifier-border);
+}
+
+/* While typing, the bar is one quiet line: the length and level, and the gear. */
+.ttr-bar.is-collapsed .ttr-bar-pause {
+	display: none;
+}
+
+.ttr-bar-head {
+	display: flex;
+	align-items: center;
+	gap: var(--size-4-1);
+}
+
+.ttr-bar-title {
+	flex: 1;
+	font-size: var(--font-ui-small);
+	color: var(--text-muted);
+}
+
+.ttr-chip-row {
+	display: flex;
+	align-items: baseline;
+	gap: var(--size-4-3);
+	margin-top: var(--size-4-2);
+}
+
+.ttr-chip-label {
+	flex: 0 0 4.5rem;
+	font-size: var(--font-ui-smaller);
+	color: var(--text-muted);
+}
+
+.ttr-chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--size-4-1);
+}
+
+.ttr-ui button.ttr-chip {
+	padding: 1px var(--size-4-3);
+	font-size: var(--font-ui-smaller);
+	color: var(--text-muted);
+	border-radius: 999px;
+}
+
+.ttr-ui button.ttr-chip:hover:not(:disabled) {
+	color: var(--text-normal);
+}
+
+.ttr-ui button.ttr-chip.is-active {
+	color: color-mix(in srgb, var(--text-accent) 45%, var(--text-normal));
+	background: var(--ttr-tint);
+	border-color: transparent;
+}
+
+.ttr-ui button.ttr-chip.is-active:hover:not(:disabled) {
+	background: var(--ttr-tint-strong);
+}
+
+/* Section tabs on the home page: quiet text with an underline on the current one. */
+.ttr-dash-tabs {
+	display: flex;
+	gap: var(--size-4-5);
+	margin-bottom: var(--size-4-6);
+	border-bottom: 1px solid var(--ttr-hair);
+}
+
+.ttr-ui button.ttr-tab {
+	margin-bottom: -1px;
+	padding: var(--size-4-2) var(--size-2-2);
+	font-size: var(--font-ui-medium);
+	color: var(--text-muted);
+	border: 0;
+	border-bottom: 2px solid transparent;
+	border-radius: 0;
+}
+
+.ttr-ui button.ttr-tab:hover:not(:disabled) {
+	color: var(--text-normal);
+	background: transparent;
+}
+
+.ttr-ui button.ttr-tab.is-active {
+	color: var(--text-normal);
+	border-bottom-color: var(--interactive-accent);
+}
+
+.ttr-matching {
+	margin-top: var(--size-4-2);
+	padding-top: var(--size-4-2);
+	border-top: 1px solid var(--background-modifier-border);
+}
+
+.ttr-hint {
+	margin-top: var(--size-4-2);
+	font-size: var(--font-ui-smaller);
+	color: var(--text-muted);
+}
+
+/* Dashboard */
+.ttr-dashboard {
+	display: flex;
+	justify-content: center;
+	padding: var(--size-4-8) var(--size-4-4);
+}
+
+.ttr-dash-column {
+	width: 100%;
+	max-width: 60rem;
+}
+
+.ttr-strip {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: var(--size-4-4);
+	margin-bottom: var(--size-4-6);
+}
+
+.ttr-cell-note {
+	margin-top: var(--size-2-1);
+	font-size: var(--font-ui-smaller);
+	color: var(--text-muted);
+}
+
+.ttr-dash-controls {
+	margin-bottom: var(--size-4-4);
+}
+
+.ttr-heat-scroll {
+	overflow-x: auto;
+	padding-bottom: var(--size-4-2);
+}
+
+.ttr-heat {
+	--ttr-cell: 12px;
+	--ttr-gap: 3px;
+}
+
+.ttr-heat-inner {
+	display: flex;
+	gap: var(--size-4-2);
+	width: max-content;
+}
+
+.ttr-heat-weekdays {
+	position: sticky;
+	left: 0;
+	z-index: 1;
+	min-width: 2.2rem;
+	background-color: var(--background-primary);
+	display: grid;
+	grid-template-rows: repeat(7, var(--ttr-cell));
+	gap: var(--ttr-gap);
+	margin-top: calc(var(--font-ui-smaller) + var(--size-4-2));
+	font-size: var(--font-ui-smaller);
+	line-height: var(--ttr-cell);
+	color: var(--text-muted);
+}
+
+.ttr-heat-months {
+	display: grid;
+	grid-template-columns: repeat(var(--ttr-weeks), var(--ttr-cell));
+	gap: var(--ttr-gap);
+	height: calc(var(--font-ui-smaller) + var(--size-4-2));
+	font-size: var(--font-ui-smaller);
+	color: var(--text-muted);
+}
+
+.ttr-heat-month {
+	grid-row: 1;
+	grid-column: var(--ttr-col);
+	overflow: visible;
+	white-space: nowrap;
+}
+
+.ttr-heat-grid {
+	display: grid;
+	grid-template-rows: repeat(7, var(--ttr-cell));
+	grid-auto-flow: column;
+	grid-auto-columns: var(--ttr-cell);
+	gap: var(--ttr-gap);
+}
+
+.ttr-day {
+	display: block;
+	width: var(--ttr-cell);
+	height: var(--ttr-cell);
+	min-height: 0;
+	padding: 0;
+	border: none;
+	border-radius: var(--radius-s);
+	box-shadow: none;
+	cursor: pointer;
+}
+
+.ttr-day-pad {
+	visibility: hidden;
+}
+
+.ttr-day.ttr-level-0 {
+	background-color: var(--background-modifier-border);
+}
+
+.ttr-day.ttr-level-1,
+.ttr-day.ttr-level-2,
+.ttr-day.ttr-level-3,
+.ttr-day.ttr-level-4 {
+	background-color: var(--interactive-accent);
+}
+
+.ttr-day.ttr-level-1 {
+	opacity: 0.3;
+}
+
+.ttr-day.ttr-level-2 {
+	opacity: 0.5;
+}
+
+.ttr-day.ttr-level-3 {
+	opacity: 0.75;
+}
+
+.ttr-day.is-today {
+	outline: 1px solid var(--text-muted);
+	outline-offset: 1px;
+}
+
+.ttr-day.is-selected {
+	outline: 2px solid var(--text-normal);
+	outline-offset: 1px;
+}
+
+.ttr-day:focus-visible {
+	outline: 2px solid var(--interactive-accent);
+	outline-offset: 2px;
+}
+
+.ttr-heat-legend {
+	display: flex;
+	align-items: center;
+	gap: var(--size-2-2);
+	margin-top: var(--size-4-2);
+	font-size: var(--font-ui-smaller);
+	color: var(--text-muted);
+}
+
+.ttr-legend-swatch {
+	display: inline-block;
+	flex: 0 0 var(--ttr-cell);
+	cursor: default;
+}
+
+.ttr-tip {
+	position: fixed;
+	left: var(--ttr-tip-x, 0);
+	top: var(--ttr-tip-y, 0);
+	z-index: var(--layer-tooltip);
+	width: max-content;
+	max-width: 22rem;
+	padding: var(--size-4-2) var(--size-4-3);
+	font-size: var(--font-ui-smaller);
+	color: var(--text-normal);
+	background-color: var(--background-primary);
+	border: 1px solid var(--background-modifier-border);
+	border-radius: var(--radius-m);
+	box-shadow: var(--shadow-s);
+	pointer-events: none;
+}
+
+.ttr-tip-title {
+	font-weight: var(--font-semibold);
+}
+
+.ttr-tip-line {
+	color: var(--text-muted);
+}
+
+.ttr-dash-day {
+	margin-top: var(--size-4-6);
+}
+
+.ttr-session-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.ttr-session {
+	padding: var(--size-4-2) 0;
+	border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.ttr-session-head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--size-4-2);
+	font-variant-numeric: tabular-nums;
+}
+
+.ttr-badge {
+	padding: 0 var(--size-4-2);
+	font-size: var(--font-ui-smaller);
+	color: var(--text-muted);
+	border: 1px solid var(--background-modifier-border);
+	border-radius: var(--radius-s);
+}
+
+.ttr-session-notes {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--size-4-2);
+	margin-top: var(--size-2-1);
+}
+
+.ttr-ui button.ttr-link {
+	height: auto;
+	padding: 0;
+	font-size: var(--font-ui-small);
+	/* A touch of the normal text colour in the accent, so the link text reaches 4.5:1 on the page. */
+	color: color-mix(in srgb, var(--text-accent) 78%, var(--text-normal));
+	background: none;
+	border: 0;
+	border-radius: 0;
+	box-shadow: none;
+	cursor: pointer;
+}
+
+.ttr-ui button.ttr-link:hover:not(:disabled) {
+	color: var(--text-accent-hover);
+	background: none;
+}
+
+.ttr-missing {
+	font-size: var(--font-ui-small);
+	color: var(--text-muted);
+}
+
+/* Practise section of the home page */
+.ttr-practise {
+	display: flex;
+	flex-direction: column;
+	gap: var(--size-4-3);
+}
+
+/* One toolbar style for the list tabs: the search, then the filter chips. */
+.ttr-toolbar {
+	display: flex;
+	flex-direction: column;
+	gap: var(--size-4-3);
+}
+
+.ttr-practise-filters {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--size-4-1);
+}
+
+.ttr-practise-tree {
+	position: relative;
+	height: calc(100vh - 18rem);
+	min-height: 16rem;
+}
+
+.ttr-tree {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	overflow-y: auto;
+}
+
+/* Measures one explorer-style row, so row height follows the theme and font size. */
+.ttr-tree-probe {
+	position: absolute;
+	right: 0;
+	left: 0;
+	visibility: hidden;
+	pointer-events: none;
+}
+
+.ttr-tree-spacer {
+	position: relative;
+	height: calc(var(--ttr-tree-rows, 0) * var(--ttr-row-pitch, 27px));
+}
+
+/* Rows carry Obsidian's explorer classes (tree-item-self, tree-item-inner), so size, colour and hover come from the theme. */
+.ttr-tree-row.tree-item-self {
+	position: absolute;
+	top: calc(var(--ttr-row-index) * var(--ttr-row-pitch, 27px));
+	right: 0;
+	left: 0;
+	display: flex;
+	align-items: center;
+	gap: var(--size-2-3);
+	height: calc(var(--ttr-row-pitch, 27px) - 2px);
+	margin: 0;
+	padding-left: calc(var(--ttr-depth) * var(--size-4-4) + var(--size-4-2));
+	white-space: nowrap;
+}
+
+/* The focused row is shown with a soft tint, not a heavy outline. */
+.ttr-tree-row:focus-visible {
+	outline: none;
+	background: var(--ttr-tint);
+}
+
+.ttr-tree-twisty {
+	display: inline-flex;
+	flex: 0 0 var(--size-4-3);
+	justify-content: center;
+	color: var(--nav-collapse-icon-color, var(--text-muted));
+}
+
+.ttr-tree-twisty svg {
+	width: 10px;
+	height: 10px;
+}
+
+.ttr-tree-check {
+	--checkbox-size: 14px;
+	flex: none;
+	margin: 0;
+}
+
+/* Partly selected: a filled box with a dash, since Obsidian's checkbox shows nothing for the mixed state. */
+.ttr-tree-row .ttr-tree-check:indeterminate {
+	background-color: var(--interactive-accent);
+	background-image: linear-gradient(var(--text-on-accent), var(--text-on-accent));
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 55% 2px;
+	border-color: var(--interactive-accent);
+}
+
+.ttr-tree-icon {
+	display: inline-flex;
+	flex: none;
+	color: var(--text-muted);
+}
+
+.ttr-tree-icon svg {
+	width: var(--icon-xs);
+	height: var(--icon-xs);
+}
+
+.ttr-tree-label {
+	flex: 1 1 auto;
+	min-width: 4rem;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.ttr-tree-row .ttr-badge {
+	flex: none;
+	font-size: var(--font-ui-smaller);
+	line-height: var(--line-height-tight);
+}
+
+.ttr-tree-detail {
+	flex: none;
+	font-size: var(--font-ui-smaller);
+	color: var(--text-muted);
+}
+
+/* Text for assistive technology only. Used instead of aria-label, which Obsidian turns into a hover tooltip. */
+.ttr-sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	white-space: nowrap;
+	opacity: 0;
+	pointer-events: none;
+}
+
+/* In a narrow sidebar the names matter more than the counts, which stay in the tooltip. */
+
+/* Right-sidebar panel for the current note */
+.ttr-panel {
+	padding: var(--size-4-2);
+}
+
+.ttr-panel-head {
+	display: flex;
+	align-items: center;
+	gap: var(--size-4-2);
+	margin-bottom: var(--size-4-2);
+}
+
+.ttr-panel-title {
+	flex: 1 1 auto;
+	min-width: 0;
+	overflow: hidden;
+	font-weight: var(--font-semibold);
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.ttr-panel-optin {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--size-4-2);
+	margin-bottom: var(--size-4-2);
+}
+
+.ttr-ui .ttr-panel-optin button:not(.clickable-icon) {
+	padding: 0 var(--size-4-2);
+	font-size: var(--font-ui-smaller);
+	border-radius: 999px;
+}
+
+.ttr-panel-list {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.ttr-panel-row.tree-item-self {
+	display: flex;
+	align-items: center;
+	gap: var(--size-2-3);
+	padding-left: calc(var(--ttr-depth) * var(--size-4-3) + var(--size-4-2));
+	white-space: nowrap;
+}
+
+.ttr-panel-play {
+	flex: none;
+}
+
+.ttr-panel-footer {
+	margin-top: var(--size-4-4);
+	padding-top: var(--size-4-2);
+	border-top: 1px solid var(--background-modifier-border);
+}
+
+.ttr-panel-footer button {
+	margin-top: var(--size-4-2);
+	font-size: var(--font-ui-small);
+}
+
+/* Queue section of the home page */
+.ttr-topbar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--size-4-4);
+	margin-bottom: var(--size-4-4);
+}
+
+.ttr-topbar-summary {
+	min-width: 0;
+	overflow: hidden;
+	color: var(--text-muted);
+	font-size: var(--font-ui-small);
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.ttr-topbar-right {
+	display: flex;
+	flex: none;
+	align-items: center;
+	gap: var(--size-4-3);
+}
+
+/* Two or three joined options, like a switch: one is always selected. */
+.ttr-segmented {
+	display: inline-flex;
+	padding: 2px;
+	border: 1px solid var(--ttr-hair);
+	border-radius: var(--radius-m);
+}
+
+.ttr-ui .ttr-segmented button.ttr-seg {
+	padding: 1px var(--size-4-3);
+	font-size: var(--font-ui-smaller);
+	color: var(--text-muted);
+	border: 0;
+	border-radius: var(--radius-s);
+}
+
+.ttr-ui .ttr-segmented button.ttr-seg.is-active {
+	color: var(--text-normal);
+	background: var(--ttr-tint);
+}
+
+.ttr-queue-list {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.ttr-queue-row.tree-item-self {
+	display: flex;
+	align-items: center;
+	gap: var(--size-2-3);
+	padding-left: var(--size-4-2);
+}
+
+.ttr-queue-row.is-muted {
+	opacity: 0.7;
+}
+
+.ttr-queue-actions {
+	display: flex;
+	flex: none;
+}
+
+/* Random section of the home page */
+.ttr-random {
+	display: flex;
+	flex-direction: column;
+	gap: var(--size-4-4);
+	max-width: 44rem;
+}
+
+/* Rows read as a form: a fixed label column, then the controls. */
+.ttr-random .ttr-chip-row,
+.ttr-random-presets {
+	display: grid;
+	grid-template-columns: 8rem minmax(0, 1fr);
+	align-items: center;
+	gap: var(--size-4-3);
+	margin-top: 0;
+}
+
+.ttr-random .ttr-chip-label,
+.ttr-random-presets .ttr-chip-label {
+	flex: none;
+	font-size: var(--font-ui-small);
+	color: var(--text-muted);
+}
+
+.ttr-random-controls {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--size-4-2);
+}
+
+.ttr-ui select.dropdown {
+	height: auto;
+	padding: var(--size-2-2) var(--size-4-6) var(--size-2-2) var(--size-4-3);
+	background-color: transparent;
+	border: 1px solid var(--ttr-hair);
+	box-shadow: none;
+}
+
+.ttr-random-toggles {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--size-4-4);
+}
+
+.ttr-toggle {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--size-4-2);
+}
+
+.ttr-chip-x {
+	display: inline-flex;
+	margin-left: var(--size-2-2);
+}
+
+.ttr-chip-x svg {
+	width: var(--icon-xs);
+	height: var(--icon-xs);
+}
+
+.ttr-random-pool {
+	display: flex;
+	flex-direction: column;
+	gap: var(--size-2-2);
+	padding: var(--size-4-3);
+	border: 1px solid var(--background-modifier-border);
+	border-radius: var(--radius-m);
+}
+
+.ttr-random-size {
+	font-size: var(--font-ui-medium);
+	font-weight: var(--font-medium);
+}
+
+.ttr-random-go {
+	align-self: flex-start;
+	padding: var(--size-4-3) var(--size-4-8);
+	font-size: var(--font-ui-large);
+}
+
+/* Recall levels and level suggestion */
+.ttr-char.ttr-faded {
+	opacity: 0.12;
+}
+
+.ttr-suggestion {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--size-4-3);
+	margin-top: var(--size-4-3);
+	padding: var(--size-4-3);
+	border: 1px solid var(--background-modifier-border);
+	border-radius: var(--radius-m);
+}
+
+/* Due card on the Overview */
+.ttr-dash-due {
+	margin-bottom: var(--size-4-4);
+}
+
+.ttr-due-card {
+	padding: var(--size-4-4);
+	border: 1px solid var(--background-modifier-border);
+	border-radius: var(--radius-m);
+}
+
+.ttr-due-head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--size-4-4);
+}
+
+.ttr-due-count {
+	font-size: var(--font-ui-large);
+	font-weight: var(--font-semibold);
+}
+
+.ttr-due-list {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.ttr-due-row.tree-item-self {
+	display: flex;
+	align-items: center;
+	gap: var(--size-2-3);
+}
+
+/* Strength bar under a note's name in the Practise tree */
+.ttr-strength {
+	flex: none;
+	width: 3rem;
+	height: 4px;
+	border-radius: var(--radius-s);
+	background: var(--background-modifier-border);
+	overflow: hidden;
+}
+
+.ttr-strength-fill {
+	display: block;
+	height: 100%;
+	width: calc(var(--ttr-strength, 0) * 100%);
+	background: var(--interactive-accent);
+}
+
+/* Queue table */
+.ttr-table-controls {
+	display: flex;
+	flex-direction: column;
+	gap: var(--size-4-3);
+	margin-bottom: var(--size-4-3);
+}
+
+.ttr-table-toolbar {
+	display: flex;
+	align-items: center;
+	gap: var(--size-4-2);
+}
+
+.ttr-table-search {
+	flex: 1 1 auto;
+}
+
+.ttr-table-tools {
+	position: relative;
+	display: flex;
+	flex: none;
+	gap: var(--size-2-2);
+}
+
+/* A small floating panel under a toolbar button. */
+.ttr-popover {
+	position: absolute;
+	top: calc(100% + var(--size-2-2));
+	right: 0;
+	z-index: var(--layer-popover);
+	display: flex;
+	flex-direction: column;
+	gap: var(--size-4-2);
+	min-width: 12rem;
+	padding: var(--size-4-3);
+	background: var(--background-primary);
+	border: 1px solid var(--ttr-hair);
+	border-radius: var(--radius-m);
+	box-shadow: var(--shadow-s);
+}
+
+.ttr-table-bulk {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--size-4-2);
+	min-height: var(--size-4-2);
+	margin-bottom: var(--size-4-2);
+}
+
+.ttr-table-wrap {
+	overflow-x: auto;
+}
+
+.ttr-table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: var(--font-ui-small);
+}
+
+.ttr-table th,
+.ttr-table td {
+	padding: var(--size-2-3) var(--size-4-2);
+	border-bottom: 1px solid var(--background-modifier-border);
+	text-align: left;
+	white-space: nowrap;
+}
+
+.ttr-table th {
+	color: var(--text-muted);
+	font-weight: var(--font-medium);
+}
+
+.ttr-table tr.is-selected {
+	background: var(--background-modifier-hover);
+}
+
+.ttr-table-check {
+	width: 2.25rem;
+	min-width: 2.25rem;
+}
+
+.ttr-table-actions {
+	width: 1%;
+	text-align: right;
+}
+
+/* On a narrow pane the table scrolls sideways, but the checkbox, the note's name and the play button stay put. */
+.ttr-table th.ttr-table-check,
+.ttr-table td.ttr-table-check,
+.ttr-table tr > :nth-child(2),
+.ttr-table th.ttr-table-actions,
+.ttr-table td.ttr-table-actions {
+	position: sticky;
+	z-index: 1;
+	background: var(--background-primary);
+}
+
+.ttr-table th.ttr-table-check,
+.ttr-table td.ttr-table-check {
+	left: 0;
+}
+
+.ttr-table tr > :nth-child(2) {
+	left: 2.25rem;
+}
+
+.ttr-table th.ttr-table-actions,
+.ttr-table td.ttr-table-actions {
+	right: 0;
+}
+
+.ttr-table tr.is-selected td {
+	background: var(--background-modifier-hover);
+}
+
+.ttr-ui .ttr-table button.ttr-table-sort,
+.ttr-ui .ttr-table button.ttr-link {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--size-2-2);
+	height: auto;
+	padding: 0;
+	background: none;
+	border: 0;
+	border-radius: 0;
+	box-shadow: none;
+	color: inherit;
+	font: inherit;
+	cursor: pointer;
+}
+
+.ttr-ui .ttr-table button.ttr-link {
+	color: color-mix(in srgb, var(--text-accent) 78%, var(--text-normal));
+}
+
+.ttr-ui .ttr-table button.ttr-link:hover:not(:disabled) {
+	background: none;
+	text-decoration: underline;
+}
+
+.ttr-ui .ttr-table button.ttr-table-sort:hover:not(:disabled) {
+	background: none;
+	color: var(--text-normal);
+}
+
+.ttr-table-arrow svg {
+	width: var(--icon-xs);
+	height: var(--icon-xs);
+}
+
+.ttr-table-rank {
+	font-size: var(--font-ui-smaller);
+	color: var(--text-muted);
+}
+
+.ttr-col-note {
+	max-width: 18rem;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.ttr-cell-empty {
+	color: var(--text-faint);
+}
+
+/* Where a chunk comes from, in sessions over several notes */
+.ttr-path {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: var(--size-4-2);
+}
+
+.ttr-path-folder {
+	font-size: var(--font-ui-smaller);
+	color: var(--text-muted);
+}
+
+.ttr-path-sep {
+	color: var(--text-faint);
+}
+
+.ttr-source-row {
+	display: flex;
+	align-items: baseline;
+	gap: var(--size-4-2);
+	margin-top: var(--size-2-2);
+}
+
+/* Word box style: a block of words, the current one tinted, and one input beneath */
+.ttr-wordstage {
+	display: flex;
+	flex-direction: column;
+	gap: var(--size-4-4);
+}
+
+.ttr-wordbox {
+	position: relative;
+	box-sizing: content-box;
+	height: calc(var(--ttr-word-lines, 3) * 2.2em);
+	padding: 0 var(--size-4-4);
+	overflow: hidden;
+	font-family: var(--font-monospace);
+	font-size: calc(var(--font-text-size) * 1.15);
+	line-height: 2.2;
+	background: var(--background-secondary);
+	border: 1px solid var(--background-modifier-border);
+	border-radius: var(--radius-m);
+}
+
+.ttr-word {
+	white-space: nowrap;
+}
+
+.ttr-word .ttr-word-text {
+	padding: 0 2px;
+	color: var(--text-muted);
+	border-radius: var(--radius-s);
+}
+
+.ttr-word.is-correct .ttr-word-text {
+	color: var(--text-normal);
+}
+
+.ttr-word.is-wrong .ttr-word-text {
+	color: var(--text-error);
+	border-bottom: 1px solid currentcolor;
+	border-radius: 0;
+}
+
+.ttr-word.is-current .ttr-word-text {
+	background: var(--ttr-tint);
+}
+
+.ttr-word .ttr-pending {
+	color: var(--text-muted);
+}
+
+.ttr-word .ttr-correct {
+	color: var(--text-normal);
+}
+
+.ttr-word .ttr-wrong {
+	color: var(--text-error);
+}
+
+/* The space between words is the same quiet dot as in the line style. */
+.ttr-word-gap {
+	color: var(--text-faint);
+}
+
+.ttr-wordinput {
+	display: flex;
+}
+
+.ttr-practice .ttr-input.ttr-word-input {
+	width: 100%;
+	padding: var(--size-4-2) var(--size-4-3);
+	font-size: calc(var(--font-text-size) * 1.15);
+	color: var(--text-normal);
+	background-color: var(--background-primary);
+	border: 1px solid var(--background-modifier-border);
+	border-radius: var(--radius-m);
+}
+
+.ttr-practice .ttr-input.ttr-word-input:focus {
+	border-color: var(--interactive-accent);
+}
+
+/* Race style: a lane with you and the pace marker, and a flowing paragraph */
+.ttr-race-lane {
+	display: flex;
+	flex-direction: column;
+	gap: var(--size-2-2);
+	margin-bottom: var(--size-4-2);
+}
+
+.ttr-race-track {
+	position: relative;
+	height: 6px;
+	background: var(--background-modifier-border);
+	border-radius: 999px;
+}
+
+.ttr-race-marker {
+	position: absolute;
+	top: 50%;
+	left: var(--ttr-race-at, 0%);
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	transform: translate(-50%, -50%);
+	transition: left 200ms linear;
+}
+
+.ttr-race-you {
+	z-index: 1;
+	background: var(--interactive-accent);
+}
+
+.ttr-race-pace {
+	background: var(--text-muted);
+	opacity: 0.6;
+}
+
+.ttr-race-labels {
+	display: flex;
+	justify-content: space-between;
+	font-size: var(--font-ui-smaller);
+	color: var(--text-muted);
+}
+
+/* The paragraph is not boxed: it reads as text. */
+.ttr-racetext {
+	background: transparent;
+	border-color: transparent;
+	padding: 0;
+}
+
+.ttr-practice .ttr-input.ttr-word-input.is-blocked {
+	border-color: var(--text-error);
+}
+
+/* Weak keys card and keyboard heat view */
+.ttr-dash-keys {
+	margin-bottom: var(--size-4-4);
+}
+
+.ttr-keys-card {
+	padding: var(--size-4-4);
+	border: 1px solid var(--background-modifier-border);
+	border-radius: var(--radius-m);
+}
+
+.ttr-keys-card h4 {
+	margin: 0;
+	font-size: var(--font-ui-medium);
+	font-weight: var(--font-medium);
+}
+
+.ttr-keyboard {
+	display: flex;
+	flex-direction: column;
+	gap: var(--size-2-2);
+	margin-top: var(--size-4-3);
+}
+
+.ttr-keyboard-row {
+	display: flex;
+	gap: var(--size-2-2);
+	padding-left: calc(var(--ttr-key-offset, 0) * 2.25rem);
+}
+
+.ttr-key {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 2rem;
+	height: 2rem;
+	font-family: var(--font-monospace);
+	font-size: var(--font-ui-small);
+	color: var(--text-normal);
+	/* The weaker the key, the stronger the tint. */
+	background: color-mix(in srgb, var(--interactive-accent) calc(var(--ttr-key-heat, 0) * 62%), var(--background-secondary));
+	border: 1px solid var(--background-modifier-border);
+	border-radius: var(--radius-s);
+}
+
+.ttr-key.is-unknown {
+	color: var(--text-muted);
+}
+
+/* Spaces left plain (the "Plain space" setting): no dot, and a mistyped space is shaded so it can still be seen. */
+.ttr-plain-spaces .ttr-space::after {
+	display: none;
+}
+
+.ttr-plain-spaces .ttr-space.ttr-wrong {
+	background: color-mix(in srgb, var(--text-error) 28%, transparent);
+	border-radius: var(--radius-s);
+}

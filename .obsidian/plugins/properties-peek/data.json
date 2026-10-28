@@ -1,0 +1,9 @@
+{
+  "showRibbonIcon": true,
+  "showNoticeOnToggle": true,
+  "startupBehaviour": "remember",
+  "peekDuration": 5,
+  "applyInSourceMode": false,
+  "keepStatePerDevice": false,
+  "propertiesHidden": true
+}
