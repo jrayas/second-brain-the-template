@@ -2,4 +2,19 @@ node_modules/
 tools/visuals/dist/
 .DS_Store
 __pycache__/
+
+# Ignore the entire configuration folder by default
+.obsidian/*
+
+# Force allow core preferences, assets, and active plugin lists
+!.obsidian/plugins/
+!.obsidian/themes/
+!.obsidian/snippets/
+!.obsidian/app.json
+!.obsidian/hotkeys.json
+!.obsidian/community-plugins.json
+
+# Strictly exclude local screen layouts and hardware device profiles
 .obsidian/workspace.json
+.obsidian/appearance.json
+.obsidian/device-id.json
