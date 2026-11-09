@@ -1,0 +1,1000 @@
+/*
+ * Calm Page — a calm, light-first, Notion-style theme for Obsidian.
+ * Author: Anthirayas
+ *
+ * Works as a theme or pasted into .obsidian/snippets/ as a snippet.
+ * No remote imports, no JavaScript, no icon replacement.
+ *
+ * Sections: 1 tokens, 2 variable mapping, 3 typography, 4 note page, 5 code,
+ * 6 callouts, 7 columns, 8 sidebar and file explorer, 9 tabs and view header,
+ * 10 right panel, 11 ribbon and status bar, 12 menus and modals, 13 scrollbars,
+ * 14 optional colour palette, 15 optional clutter removal (commented out).
+ */
+
+/* ==========================================================================
+   1. Tokens
+   ========================================================================== */
+
+body.theme-light {
+    --nc-bg: #fff;
+    --nc-bg-side: #f7f7f5;
+    --nc-hover: rgb(55 53 47 / 6%);
+    --nc-select: rgb(55 53 47 / 9%);
+    --nc-text: #37352f;
+    --nc-text-muted: #91908c; /* about 3:1 on white; use #787774 for stronger contrast */
+    --nc-text-faint: #b5b4b0;
+    --nc-border: rgb(55 53 47 / 9%);
+    --nc-border-strong: rgb(55 53 47 / 16%);
+    --nc-code-bg: rgb(135 131 120 / 15%);
+    --nc-code-text: #b0467f; /* classic Notion red: #eb5757 */
+    --nc-codeblock-bg: #f7f6f3;
+    --nc-accent: #b0467f;
+    --nc-accent-rgb: 176, 70, 127;
+    --nc-link: #2f6fab;
+    --nc-callout-pink: #f9eaf1;
+    --nc-callout-pink-rgb: 249, 234, 241;
+    --nc-callout-cream: #faf3e0;
+    --nc-callout-cream-rgb: 250, 243, 224;
+    --nc-mark: rgb(255 212 102 / 45%);
+    --nc-shadow: 0 8px 24px rgb(0 0 0 / 8%);
+    --nc-on-accent: #fff;
+    --nc-table-border: rgb(55 53 47 / 16%);
+    --nc-table-header-bg: #f7f6f3;
+    --nc-table-header-text: #37352f;
+    --nc-table-row-hover: rgb(55 53 47 / 3%);
+    --nc-table-selection: rgb(176 70 127 / 12%);
+
+    /* Syntax colours (grouped on purpose) */
+    --nc-syn-comment: #91908c;
+    --nc-syn-keyword: #9065b0;
+    --nc-syn-string: #448361;
+    --nc-syn-number: #d9730d;
+    --nc-syn-function: #337ea9;
+    --nc-syn-tag: #d44c47;
+    --nc-syn-property: #9f6b53;
+
+    /* Optional palette */
+    --nc-gray: #787774;
+    --nc-gray-bg: #f1f1ef;
+    --nc-brown: #9f6b53;
+    --nc-brown-bg: #f4eeee;
+    --nc-orange: #d9730d;
+    --nc-orange-bg: #fbecdd;
+    --nc-yellow: #cb912f;
+    --nc-yellow-bg: #fbf3db;
+    --nc-green: #448361;
+    --nc-green-bg: #edf3ec;
+    --nc-blue: #337ea9;
+    --nc-blue-bg: #e7f3f8;
+    --nc-purple: #9065b0;
+    --nc-purple-bg: #f6f3f9;
+    --nc-pink: #c14c8a;
+    --nc-pink-bg: #faf1f5;
+    --nc-red: #d44c47;
+    --nc-red-bg: #fdebec;
+}
+
+body.theme-dark {
+    --nc-bg: #191919;
+    --nc-bg-side: #202020;
+    --nc-hover: rgb(255 255 255 / 5.5%);
+    --nc-select: rgb(255 255 255 / 9%);
+    --nc-text: #e6e6e4;
+    --nc-text-muted: #7d7d7b;
+    --nc-text-faint: #5a5a58;
+    --nc-border: rgb(255 255 255 / 9%);
+    --nc-border-strong: rgb(255 255 255 / 16%);
+    --nc-code-bg: rgb(255 255 255 / 10%);
+    --nc-code-text: #e08ab8; /* classic Notion red: #ff8f8f */
+    --nc-codeblock-bg: #202020;
+    --nc-accent: #e08ab8;
+    --nc-accent-rgb: 224, 138, 184;
+    --nc-link: #6aa9e0;
+    --nc-callout-pink: #3a2631;
+    --nc-callout-pink-rgb: 58, 38, 49;
+    --nc-callout-cream: #38332a;
+    --nc-callout-cream-rgb: 56, 51, 42;
+    --nc-mark: rgb(255 200 60 / 25%);
+    --nc-shadow: 0 8px 24px rgb(0 0 0 / 40%);
+    --nc-on-accent: #191919;
+    --nc-table-border: rgb(255 255 255 / 14%);
+    --nc-table-header-bg: #202020;
+    --nc-table-header-text: #e6e6e4;
+    --nc-table-row-hover: rgb(255 255 255 / 3%);
+    --nc-table-selection: rgb(224 138 184 / 16%);
+    --nc-syn-comment: #7d7d7b;
+    --nc-syn-keyword: #c3a1e0;
+    --nc-syn-string: #7fc29b;
+    --nc-syn-number: #f0a463;
+    --nc-syn-function: #7fb9db;
+    --nc-syn-tag: #f08e8a;
+    --nc-syn-property: #cfa38c;
+    --nc-gray: #9b9a97;
+    --nc-gray-bg: #2f2f2f;
+    --nc-brown: #c09a86;
+    --nc-brown-bg: #3b2f2b;
+    --nc-orange: #f0a463;
+    --nc-orange-bg: #42301f;
+    --nc-yellow: #e5b85c;
+    --nc-yellow-bg: #3d3520;
+    --nc-green: #6fb08d;
+    --nc-green-bg: #243a2e;
+    --nc-blue: #6aa9cc;
+    --nc-blue-bg: #223540;
+    --nc-purple: #b595d0;
+    --nc-purple-bg: #332a3c;
+    --nc-pink: #e08ab8;
+    --nc-pink-bg: #3a2631;
+    --nc-red: #f08e8a;
+    --nc-red-bg: #402627;
+}
+
+/* Layout and type tokens, identical in both modes */
+body {
+    --nc-content-width: 720px;
+    --nc-base-size: 16px;
+    --nc-line-height: 1.65;
+    --nc-p-spacing: 0.6em;
+    --nc-h1-size: 2em;
+    --nc-h2-size: 1.35em;
+    --nc-h3-size: 1.15em;
+    --nc-h4-size: 1.05em;
+    --nc-h-space-above: 1.6em;
+    --nc-h-space-below: 0.35em;
+    --nc-radius: 6px;
+    --nc-radius-lg: 10px;
+    --nc-row-height: 28px;
+    --nc-transition: 120ms ease;
+}
+
+/* ==========================================================================
+   2. Obsidian variable mapping
+   ========================================================================== */
+
+body {
+    /* Fonts: system fallbacks only, nothing remote. Inter is optional. */
+    --font-interface: inter, -apple-system, blinkmacsystemfont, "SF Pro Text", "Segoe UI", roboto, helvetica, arial, sans-serif;
+    --font-text: var(--font-interface);
+    --font-monospace: "SF Mono", sfmono-regular, ui-monospace, menlo, consolas, "Courier New", monospace;
+    --font-ui-small: 13px;
+    --font-ui-medium: 14px;
+    --font-ui-large: 16px;
+    --font-text-size: var(--nc-base-size);
+    --radius-s: 4px;
+    --radius-m: var(--nc-radius);
+    --radius-l: var(--nc-radius-lg);
+    --background-primary: var(--nc-bg);
+    --background-primary-alt: var(--nc-bg-side);
+    --background-secondary: var(--nc-bg-side);
+    --background-secondary-alt: var(--nc-bg-side);
+    --background-modifier-hover: var(--nc-hover);
+    --background-modifier-active-hover: var(--nc-select);
+    --background-modifier-border: var(--nc-border);
+    --background-modifier-border-hover: var(--nc-border-strong);
+    --divider-color: var(--nc-border);
+    --text-normal: var(--nc-text);
+    --text-muted: var(--nc-text-muted);
+    --text-faint: var(--nc-text-faint);
+    --text-accent: var(--nc-accent);
+    --text-accent-hover: var(--nc-accent);
+    --text-selection: rgb(var(--nc-accent-rgb), 0.2);
+    --text-highlight-bg: var(--nc-mark);
+    --interactive-accent: var(--nc-accent);
+    --interactive-accent-hover: var(--nc-accent);
+    --interactive-normal: var(--nc-bg);
+    --interactive-hover: var(--nc-hover);
+    --caret-color: var(--nc-text);
+    --icon-color: var(--nc-text-muted);
+    --icon-color-hover: var(--nc-text);
+    --icon-color-active: var(--nc-text);
+    --icon-color-focused: var(--nc-text);
+    --shadow-s: var(--nc-shadow);
+    --shadow-l: var(--nc-shadow);
+}
+
+/* ==========================================================================
+   3. Typography
+   ========================================================================== */
+
+body {
+    --line-height-normal: var(--nc-line-height);
+    --p-spacing: var(--nc-p-spacing);
+    --heading-spacing: var(--nc-h-space-above);
+    --bold-weight: 600;
+    --bold-color: var(--nc-text);
+    --italic-color: var(--nc-text);
+    --h1-size: var(--nc-h1-size);
+    --h1-weight: 700;
+    --h1-line-height: 1.15;
+    --h2-size: var(--nc-h2-size);
+    --h2-weight: 600;
+    --h2-line-height: 1.3;
+    --h3-size: var(--nc-h3-size);
+    --h3-weight: 600;
+    --h3-line-height: 1.35;
+    --h4-size: var(--nc-h4-size);
+    --h4-weight: 600;
+    --h5-size: 1em;
+    --h5-weight: 600;
+    --h6-size: 1em;
+    --h6-weight: 600;
+    --h1-color: var(--nc-text);
+    --h2-color: var(--nc-text);
+    --h3-color: var(--nc-text);
+    --h4-color: var(--nc-text);
+    --h5-color: var(--nc-text);
+    --h6-color: var(--nc-text);
+    --inline-title-size: var(--nc-h1-size);
+    --inline-title-weight: 700;
+    --inline-title-line-height: 1.15;
+    --inline-title-color: var(--nc-text);
+}
+
+/* Heading spacing: tight below, generous above. Targets rendered and Live Preview headings. */
+.markdown-rendered h1,
+.markdown-rendered h2,
+.markdown-rendered h3,
+.markdown-rendered h4 {
+    margin-block: var(--nc-h-space-above) var(--nc-h-space-below);
+}
+
+.markdown-rendered h1 {
+    letter-spacing: -0.02em;
+}
+
+.markdown-rendered h2 {
+    letter-spacing: -0.01em;
+}
+
+.inline-title {
+    letter-spacing: -0.02em;
+}
+
+/* ==========================================================================
+   4. Note page
+   ========================================================================== */
+
+body {
+    --file-line-width: var(--nc-content-width);
+    --file-margins: 36px 48px;
+    --file-folding-offset: 22px;
+    --link-color: var(--nc-text);
+    --link-color-hover: var(--nc-text);
+    --link-decoration: underline;
+    --link-decoration-hover: underline;
+    --link-external-color: var(--nc-link);
+    --link-external-color-hover: var(--nc-link);
+    --link-external-decoration: underline;
+    --link-unresolved-color: var(--nc-text-muted);
+    --link-unresolved-opacity: 1;
+    --link-unresolved-decoration-style: dashed;
+    --link-unresolved-decoration-color: var(--nc-text-faint);
+    --blockquote-border-thickness: 3px;
+    --blockquote-border-color: var(--nc-border-strong);
+    --blockquote-color: var(--nc-text-muted);
+    --blockquote-background-color: transparent;
+    --hr-color: var(--nc-border);
+    --hr-thickness: 1px;
+    --list-indent: 1.4em;
+    --list-spacing: 0.15em;
+    --list-marker-color: var(--nc-text-muted);
+    --list-marker-color-hover: var(--nc-text-muted);
+    --list-marker-color-collapsed: var(--nc-accent);
+    --list-bullet-radius: 50%;
+    --list-bullet-size: 0.3em;
+    --indentation-guide-width: 0;
+    --checkbox-size: 16px;
+    --checkbox-radius: 4px;
+    --checkbox-border-color: var(--nc-text-muted);
+    --checkbox-border-color-hover: var(--nc-text);
+    --checkbox-color: var(--nc-accent);
+    --checkbox-color-hover: var(--nc-accent);
+    --checkbox-marker-color: var(--nc-on-accent);
+    --checklist-done-decoration: line-through;
+    --checklist-done-color: var(--nc-text-muted);
+    --tag-background: var(--nc-code-bg);
+    --tag-background-hover: var(--nc-select);
+    --tag-color: var(--nc-text);
+    --tag-color-hover: var(--nc-text);
+    --tag-border-width: 0;
+    --tag-radius: 4px;
+    --tag-padding-x: 0.5em;
+    --tag-padding-y: 0.1em;
+    --tag-size: 0.9em;
+    --tag-weight: 400;
+    --embed-padding: 0 0 0 16px;
+    --embed-border-left: 2px solid var(--nc-border-strong);
+    --embed-border-right: none;
+    --embed-border-top: none;
+    --embed-border-bottom: none;
+    --embed-background: transparent;
+}
+
+/* Page top padding so the title sits well below the tab bar */
+.markdown-source-view.mod-cm6 .cm-scroller,
+.markdown-preview-view {
+    padding-block-start: 36px;
+}
+
+/* Ordered-list numbers in the accent colour (Reading view and Live Preview) */
+.markdown-rendered ol > li::marker,
+.cm-formatting-list-ol {
+    color: var(--nc-accent);
+}
+
+/* Bullet glyphs by level in Reading view. Live Preview keeps Obsidian's dots, which cannot be swapped by CSS alone. */
+.markdown-rendered ul > li {
+    list-style-type: "•  ";
+}
+
+.markdown-rendered ul ul > li {
+    list-style-type: "◦  ";
+}
+
+.markdown-rendered ul ul ul > li {
+    list-style-type: "▪  ";
+}
+
+.markdown-rendered ul > li.task-list-item {
+    list-style-type: none;
+}
+
+.markdown-rendered ul > li::marker {
+    color: var(--nc-text-muted);
+}
+
+/* Soft underline on links */
+.markdown-rendered a,
+.cm-s-obsidian .cm-link .cm-underline,
+.cm-s-obsidian span.cm-url {
+    text-underline-offset: 2px;
+}
+
+/* Strikethrough and italic details */
+.markdown-rendered del,
+.cm-s-obsidian .cm-strikethrough {
+    color: var(--nc-text-muted);
+}
+
+.markdown-rendered em,
+.cm-s-obsidian .cm-em {
+    font-style: normal;
+    font-synthesis: none;
+}
+
+/* Highlights (==text==) */
+.markdown-rendered mark,
+.cm-s-obsidian .cm-highlight {
+    padding: 0.05em 0.2em;
+    border-radius: 3px;
+}
+
+/* Keyboard keys */
+kbd {
+    padding: 0.1em 0.45em;
+    font-family: var(--font-monospace);
+    font-size: 0.8em;
+    color: var(--nc-text);
+    background-color: var(--nc-bg-side);
+    border: 1px solid var(--nc-border);
+    border-radius: 4px;
+}
+
+/* Footnotes */
+.markdown-rendered .footnotes {
+    font-size: 0.85em;
+    color: var(--nc-text-muted);
+}
+
+/* Block IDs stay very faint */
+.cm-s-obsidian .cm-blockid {
+    color: var(--nc-text-faint);
+}
+
+/* Images: rounded, borderless, no shadow */
+.markdown-rendered img,
+.markdown-source-view.mod-cm6 img {
+    max-width: 100%;
+    border-radius: var(--nc-radius);
+}
+
+/* Embedded notes: quiet headings, left bar from the embed variables */
+.markdown-embed h1,
+.markdown-embed h2,
+.markdown-embed h3 {
+    font-size: 1.1em;
+    margin-block-start: 0.4em;
+}
+
+/* PDF, audio and video embeds */
+.markdown-rendered video,
+.markdown-rendered audio,
+.pdf-embed {
+    border: 1px solid var(--nc-border);
+    border-radius: var(--nc-radius);
+}
+
+/* Properties (frontmatter) keep Obsidian's default look: no overrides here. */
+
+/* Fold chevrons in the editor: hidden until the line is hovered */
+.cm-fold-indicator {
+    opacity: 0;
+    transition: opacity var(--nc-transition);
+}
+
+.cm-line:hover .cm-fold-indicator,
+.cm-fold-indicator.is-collapsed {
+    opacity: 1;
+}
+
+.markdown-rendered .heading-collapse-indicator,
+.markdown-rendered .list-collapse-indicator {
+    opacity: 0;
+    transition: opacity var(--nc-transition);
+}
+
+.markdown-rendered .is-collapsed > .heading-collapse-indicator,
+.markdown-rendered .is-collapsed > .list-collapse-indicator,
+.markdown-rendered :is(h1, h2, h3, h4, h5, h6, li):hover > .heading-collapse-indicator,
+.markdown-rendered li:hover > .list-collapse-indicator {
+    opacity: 1;
+}
+
+/* ==========================================================================
+   5. Code
+   ========================================================================== */
+
+body {
+    --code-background: var(--nc-codeblock-bg);
+    --code-size: 0.85em;
+    --code-normal: var(--nc-text);
+    --code-comment: var(--nc-syn-comment);
+    --code-function: var(--nc-syn-function);
+    --code-important: var(--nc-syn-number);
+    --code-keyword: var(--nc-syn-keyword);
+    --code-operator: var(--nc-text-muted);
+    --code-property: var(--nc-syn-property);
+    --code-punctuation: var(--nc-text-muted);
+    --code-string: var(--nc-syn-string);
+    --code-tag: var(--nc-syn-tag);
+    --code-value: var(--nc-syn-number);
+}
+
+/* Inline code chip */
+.markdown-rendered :not(pre) > code,
+.cm-s-obsidian span.cm-inline-code {
+    padding: 0.15em 0.4em;
+    color: var(--nc-code-text);
+    background-color: var(--nc-code-bg);
+    border: 0;
+    border-radius: 4px;
+}
+
+/* Fenced code block */
+.markdown-rendered pre {
+    padding: 16px 20px;
+    line-height: 1.6;
+    background-color: var(--nc-codeblock-bg);
+    border: 1px solid var(--nc-border);
+    border-radius: var(--nc-radius);
+}
+
+.markdown-rendered pre code {
+    color: var(--nc-text);
+    background: none;
+}
+
+/* ==========================================================================
+   6. Callouts
+   ========================================================================== */
+
+body {
+    --callout-radius: var(--nc-radius-lg);
+    --callout-padding: 16px 18px;
+    --callout-title-padding: 0;
+    --callout-title-weight: 600;
+    --callout-title-color: inherit;
+    --callout-content-padding: 0;
+    --callout-border-width: 0;
+    --callout-border-opacity: 0;
+    --callout-blend-mode: normal;
+}
+
+.callout {
+    font-size: 0.95em;
+    line-height: 1.55;
+    border: 0;
+    box-shadow: none;
+}
+
+.callout-title {
+    color: var(--nc-text);
+}
+
+.callout-content {
+    color: var(--nc-text);
+}
+
+/* Quiet fold chevron on foldable callouts */
+.callout-fold {
+    color: var(--nc-text-muted);
+}
+
+/* Custom types: exact hex backgrounds, emoji supplied by the user in the title */
+.callout[data-callout="blush"] {
+    --callout-color: var(--nc-callout-pink-rgb);
+
+    background-color: var(--nc-callout-pink);
+}
+
+.callout[data-callout="sand"] {
+    --callout-color: var(--nc-callout-cream-rgb);
+
+    background-color: var(--nc-callout-cream);
+}
+
+.callout[data-callout="blush"] .callout-icon,
+.callout[data-callout="sand"] .callout-icon {
+    display: none;
+}
+
+/* ==========================================================================
+   7. Columns  (> [!columns] with nested callouts)
+   ========================================================================== */
+
+.callout[data-callout="columns"] {
+    padding: 0;
+    background: none;
+    border: 0;
+    border-radius: 0;
+}
+
+.callout[data-callout="columns"] > .callout-title {
+    display: none;
+}
+
+.callout[data-callout="columns"] > .callout-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    align-items: start;
+    padding: 0;
+}
+
+.callout[data-callout="columns"] > .callout-content > .callout {
+    margin: 0;
+}
+
+/* ==========================================================================
+   8. Left sidebar and file explorer
+   ========================================================================== */
+
+body {
+    --nav-indentation-guide-width: 0;
+    --nav-item-color: var(--nc-text);
+    --nav-item-color-hover: var(--nc-text);
+    --nav-item-color-active: var(--nc-text);
+    --nav-item-color-selected: var(--nc-text);
+    --nav-item-background-hover: var(--nc-hover);
+    --nav-item-background-active: var(--nc-select);
+    --nav-item-background-selected: var(--nc-select);
+    --nav-item-weight: 400;
+    --nav-item-weight-hover: 400;
+    --nav-item-weight-active: 500;
+    --nav-item-white-space: nowrap;
+    --nav-collapse-icon-color: var(--nc-text-muted);
+    --nav-collapse-icon-color-collapsed: var(--nc-text-muted);
+    --nav-heading-color: var(--nc-text-muted);
+    --nav-heading-color-hover: var(--nc-text);
+    --nav-heading-color-collapsed: var(--nc-text-muted);
+    --nav-heading-color-collapsed-hover: var(--nc-text);
+    --nav-heading-weight: 500;
+    --nav-heading-weight-hover: 500;
+}
+
+/* Rounded rows. Size, padding and indent stay at Obsidian's defaults so the highlight lines up. */
+.nav-file-title,
+.nav-folder-title {
+    border-radius: var(--nc-radius);
+    transition: background-color var(--nc-transition);
+}
+
+.nav-file-title-content,
+.nav-folder-title-content {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    opacity: 0.82;
+}
+
+.nav-file-title:hover .nav-file-title-content,
+.nav-folder-title:hover .nav-folder-title-content,
+.nav-file-title.is-active .nav-file-title-content {
+    opacity: 1;
+}
+
+.nav-folder-collapse-indicator svg {
+    width: 12px;
+    height: 12px;
+}
+
+/* ==========================================================================
+   9. Tabs and view header
+   ========================================================================== */
+
+body {
+    --header-height: 40px;
+    --tab-container-background: var(--nc-bg-side);
+    --tab-background-active: var(--nc-bg);
+    --tab-text-color: var(--nc-text-muted);
+    --tab-text-color-focused: var(--nc-text);
+    --tab-text-color-focused-active: var(--nc-text);
+    --tab-text-color-focused-active-current: var(--nc-text);
+    --tab-radius: var(--nc-radius);
+    --tab-radius-active: var(--nc-radius);
+    --tab-font-size: 13px;
+    --tab-font-weight: 400;
+    --tab-outline-width: 0;
+    --tab-divider-color: transparent;
+}
+
+.workspace-tab-header-container {
+    border-bottom: 1px solid var(--nc-border);
+}
+
+.workspace-tab-header {
+    transition: background-color var(--nc-transition);
+}
+
+.workspace-tab-header:hover {
+    background-color: var(--nc-hover);
+}
+
+/* Active tab: page colour with a hairline outline */
+.workspace-tab-header.is-active {
+    background-color: var(--nc-bg);
+    box-shadow: 0 0 0 1px var(--nc-border);
+}
+
+/* Close buttons only on hover or on the active tab */
+.workspace-tab-header:not(.is-active) .workspace-tab-header-inner-close-button {
+    opacity: 0;
+}
+
+.workspace-tab-header:hover .workspace-tab-header-inner-close-button {
+    opacity: 1;
+}
+
+/* Stacked tabs keep their own layout */
+.mod-stacked .workspace-tab-header.is-active {
+    box-shadow: none;
+}
+
+/* View header (breadcrumb row) */
+.view-header {
+    font-size: 13px;
+}
+
+.view-header-title,
+.view-header-breadcrumb {
+    color: var(--nc-text-muted);
+}
+
+.view-header-title-parent .view-header-breadcrumb-separator {
+    color: var(--nc-text-faint);
+}
+
+.view-header-title {
+    color: var(--nc-text);
+    font-weight: 500;
+}
+
+/* ==========================================================================
+   10. Right panel
+   ========================================================================== */
+
+body {
+    --sidebar-markdown-font-size: 14px;
+}
+
+.mod-right-split .workspace-tab-container {
+    padding: 10px 12px;
+    border-inline-start: 1px solid var(--nc-border);
+}
+
+.mod-right-split .workspace-tab-header-container {
+    background-color: var(--nc-bg-side);
+}
+
+.mod-right-split .workspace-tab-header {
+    width: 28px;
+    height: 28px;
+    border-radius: var(--nc-radius);
+}
+
+.mod-right-split .workspace-tab-header.is-active {
+    background-color: var(--nc-select);
+    box-shadow: none;
+}
+
+/* Outline, backlinks and outgoing links rows */
+.mod-right-split .tree-item-self {
+    min-height: 24px;
+    border-radius: var(--nc-radius);
+    transition: background-color var(--nc-transition);
+}
+
+.mod-right-split .tree-item-self:hover {
+    background-color: var(--nc-hover);
+}
+
+.mod-right-split .tree-item-self.is-active .tree-item-inner {
+    color: var(--nc-text);
+}
+
+/* ==========================================================================
+   11. Ribbon and status bar
+   ========================================================================== */
+
+body {
+    --ribbon-width: 44px;
+    --ribbon-background: var(--nc-bg-side);
+    --ribbon-background-collapsed: var(--nc-bg-side);
+    --status-bar-background: transparent;
+    --status-bar-border-width: 0;
+    --status-bar-text-color: var(--nc-text-muted);
+    --status-bar-font-size: 12px;
+}
+
+.workspace-ribbon {
+    border-inline-end: 1px solid var(--nc-border);
+}
+
+.side-dock-ribbon-action,
+.clickable-icon {
+    border-radius: var(--nc-radius);
+    transition: background-color var(--nc-transition);
+}
+
+/* ==========================================================================
+   12. Menus, modals, command palette, tables, buttons
+   ========================================================================== */
+
+body {
+    --menu-radius: 8px;
+    --modal-radius: 12px;
+    --modal-border-width: 1px;
+    --modal-border-color: var(--nc-border);
+    --popover-radius: var(--nc-radius-lg);
+    --button-radius: var(--nc-radius);
+    --toggle-radius: 999px;
+}
+
+.menu,
+.popover {
+    border: 1px solid var(--nc-border);
+    box-shadow: var(--nc-shadow);
+}
+
+.menu-item {
+    border-radius: var(--nc-radius);
+    transition: background-color var(--nc-transition);
+}
+
+.menu-item.selected,
+.menu-item:hover {
+    background-color: var(--nc-hover);
+}
+
+.modal {
+    border-radius: 12px;
+}
+
+/* Settings window */
+.vertical-tab-header {
+    background-color: var(--nc-bg-side);
+}
+
+.vertical-tab-content {
+    background-color: var(--nc-bg);
+}
+
+/* Buttons: flat; primary uses the accent */
+button.mod-cta {
+    color: var(--nc-on-accent);
+    background-color: var(--nc-accent);
+    box-shadow: none;
+}
+
+button:not(.mod-cta, .clickable-icon) {
+    box-shadow: none;
+}
+
+/* Tables: Notion "simple table" */
+body {
+    --table-background: transparent;
+    --table-border-width: 1px;
+    --table-border-color: var(--nc-table-border);
+    --table-header-background: var(--nc-table-header-bg);
+    --table-header-background-hover: var(--nc-table-header-bg);
+    --table-header-border-width: 1px;
+    --table-header-border-color: var(--nc-table-border);
+    --table-header-weight: 600;
+    --table-header-size: 0.95em;
+    --table-header-color: var(--nc-table-header-text);
+    --table-text-size: 95%;
+    --table-line-height: 1.5;
+    --table-text-color: inherit;
+    --table-cell-vertical-alignment: top;
+    --table-column-first-border-width: 1px;
+    --table-column-last-border-width: 1px;
+    --table-row-background-hover: var(--nc-table-row-hover);
+    --table-column-alt-background: transparent;
+    --table-selection: var(--nc-table-selection);
+    --table-selection-border-color: var(--nc-accent);
+    --table-selection-border-width: 1px;
+    --table-selection-border-radius: 2px;
+    --table-edge-cell-padding-first: 10px;
+    --table-edge-cell-padding-last: 10px;
+}
+
+/* Cell padding for Reading view only; Live Preview keeps Obsidian's own cell padding. */
+.markdown-rendered table th,
+.markdown-rendered table td {
+    padding: 7px 10px;
+}
+
+/* Square corners */
+.markdown-rendered table,
+.cm-table-widget {
+    border-radius: 0;
+}
+
+/* Wide tables scroll inside their own container. Reading view wraps each table in .el-table.
+   Live Preview is left to Obsidian's own .table-wrapper: scrolling .cm-table-widget would clip the drag handles and add buttons. */
+.markdown-rendered .el-table {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.cm-table-widget {
+    max-width: 100%;
+}
+
+/* Dataview tables follow the same style */
+.dataview.table-view-table {
+    width: 100%;
+}
+
+/* Notion database look, enabled with cssclasses: notion-db */
+.notion-db table {
+    --table-border-width: 0;
+    --table-column-first-border-width: 0;
+    --table-column-last-border-width: 0;
+    --table-header-background: transparent;
+    --table-header-background-hover: transparent;
+    --table-header-border-width: 0;
+    --table-header-size: 13px;
+    --table-header-weight: 500;
+    --table-header-color: var(--nc-text-muted);
+}
+
+.notion-db table tr {
+    border-bottom: 1px solid var(--nc-border);
+}
+
+.notion-db table th,
+.notion-db table td {
+    border: 0;
+}
+
+/* Helper classes via cssclasses */
+.table-compact table {
+    --table-text-size: 90%;
+}
+
+.table-compact table th,
+.table-compact table td {
+    padding: 4px 8px;
+}
+
+.table-first-col-bold table td:first-child {
+    font-weight: 600;
+}
+
+/* Bases (core database feature) */
+body {
+    --bases-table-container-border-width: 1px;
+    --bases-table-container-border-radius: 0;
+    --bases-table-header-background: transparent;
+    --bases-table-header-background-hover: var(--nc-hover);
+    --bases-table-header-color: var(--nc-text-muted);
+    --bases-table-header-weight: 500;
+    --bases-table-header-size: 13px;
+    --bases-table-row-background-hover: var(--nc-hover);
+    --bases-table-text-size: 14px;
+    --bases-cards-container-background: var(--nc-bg);
+    --bases-cards-background: var(--nc-bg);
+    --bases-cards-border-width: 1px;
+    --bases-cards-shadow: none;
+    --bases-cards-shadow-hover: 0 2px 8px rgb(0 0 0 / 6%);
+}
+
+/* ==========================================================================
+   13. Scrollbars and motion
+   ========================================================================== */
+
+body {
+    --scrollbar-bg: transparent;
+    --scrollbar-thumb-bg: var(--nc-hover);
+    --scrollbar-active-thumb-bg: var(--nc-border-strong);
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--nc-hover);
+    background-clip: padding-box;
+    border: 2px solid transparent;
+    border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--nc-border-strong);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition: none;
+        animation: none;
+    }
+}
+
+/* ==========================================================================
+   14. Optional Notion colour palette
+   Use <span class="nc-red">text</span> or <span class="nc-red-bg">text</span>.
+   ========================================================================== */
+
+.nc-gray { color: var(--nc-gray); }
+.nc-brown { color: var(--nc-brown); }
+.nc-orange { color: var(--nc-orange); }
+.nc-yellow { color: var(--nc-yellow); }
+.nc-green { color: var(--nc-green); }
+.nc-blue { color: var(--nc-blue); }
+.nc-purple { color: var(--nc-purple); }
+.nc-pink { color: var(--nc-pink); }
+.nc-red { color: var(--nc-red); }
+
+.nc-gray-bg { background-color: var(--nc-gray-bg); }
+.nc-brown-bg { background-color: var(--nc-brown-bg); }
+.nc-orange-bg { background-color: var(--nc-orange-bg); }
+.nc-yellow-bg { background-color: var(--nc-yellow-bg); }
+.nc-green-bg { background-color: var(--nc-green-bg); }
+.nc-blue-bg { background-color: var(--nc-blue-bg); }
+.nc-purple-bg { background-color: var(--nc-purple-bg); }
+.nc-pink-bg { background-color: var(--nc-pink-bg); }
+.nc-red-bg { background-color: var(--nc-red-bg); }
+
+[class*="nc-"][class$="-bg"] {
+    padding: 0.05em 0.3em;
+    border-radius: 3px;
+}
+
+/* ==========================================================================
+   15. Optional clutter removal. Uncomment what you want.
+   ========================================================================== */
+
+/*
+.workspace-ribbon { display: none; }
+.status-bar { display: none; }
+.inline-title { display: none; }
+*/

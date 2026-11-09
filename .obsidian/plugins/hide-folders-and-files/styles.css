@@ -1,0 +1,4 @@
+body .nav-files-container .hide-folders-and-files--hidden,
+body .is-qe-folder.hide-folders-and-files--hidden {
+  display: none;
+}

@@ -183,6 +183,7 @@ body {
 --radius-xl: 20px;
 --sw-pill: 999px;
 --file-line-width: 720px;
+--sw-page-top: 1.75rem;
 --line-height-normal: 1.7;
 --bold-weight: 600;
 --inline-title-size: 2.5em;
@@ -194,7 +195,7 @@ body {
 --h2-size: 1.6em;
 --h2-weight: 600;
 --h2-line-height: 1.15;
---h3-size: 1.3em;
+--h3-size: 1.2em;
 --h3-weight: 600;
 --h3-line-height: 1.2;
 --h4-size: 1.12em;
@@ -203,6 +204,23 @@ body {
 --h5-weight: 600;
 --h6-size: 0.8em;
 --h6-weight: 700;
+--sw-space-unit: var(--font-text-size, 16px);
+--sw-space-h1-bottom: calc(var(--sw-space-unit) * 1.4);
+--sw-space-h2-top: calc(var(--sw-space-unit) * 1.2);
+--sw-space-h2-bottom: calc(var(--sw-space-unit) * 0.5);
+--sw-space-h3-top: calc(var(--sw-space-unit) * 0.9);
+--sw-space-h3-bottom: calc(var(--sw-space-unit) * 0.4);
+--sw-space-h4-top: calc(var(--sw-space-unit) * 1.2);
+--sw-space-h4-bottom: calc(var(--sw-space-unit) * 0.4);
+--sw-space-p: calc(var(--sw-space-unit) * 0.8);
+--sw-space-list: calc(var(--sw-space-unit) * 0.9);
+--sw-space-table: calc(var(--sw-space-unit) * 1);
+--sw-space-quote: calc(var(--sw-space-unit) * 1.4);
+--sw-space-callout: calc(var(--sw-space-unit) * 1.2);
+--sw-space-code: calc(var(--sw-space-unit) * 1);
+--p-spacing: var(--sw-space-p);
+--p-spacing-empty: 0px;
+--heading-spacing: var(--sw-space-h2-top);
 --tag-radius: var(--sw-pill);
 --tag-padding-x: 10px;
 --tag-padding-y: 2px;
@@ -509,6 +527,54 @@ font-weight: 400;
 letter-spacing: -0.01em;
 color: var(--sw-accent);
 }
+.markdown-rendered.markdown-rendered.markdown-rendered h1 { margin-block: 0 var(--sw-space-h1-bottom); }
+.markdown-rendered.markdown-rendered.markdown-rendered h2 { margin-block: var(--sw-space-h2-top) var(--sw-space-h2-bottom); }
+.markdown-rendered.markdown-rendered.markdown-rendered h3 { margin-block: var(--sw-space-h3-top) var(--sw-space-h3-bottom); }
+.markdown-rendered.markdown-rendered.markdown-rendered :is(h4, h5, h6) { margin-block: var(--sw-space-h4-top) var(--sw-space-h4-bottom); }
+.markdown-rendered p { margin-block: 0 var(--sw-space-p); }
+.markdown-rendered :is(ul, ol) { margin-block: var(--sw-space-list); }
+.markdown-rendered table { margin-block: var(--sw-space-table); }
+.markdown-rendered blockquote { margin-block: var(--sw-space-quote); }
+.markdown-rendered .callout { margin-block: var(--sw-space-callout); }
+.markdown-rendered pre { margin-block: var(--sw-space-code); }
+.markdown-rendered li > :is(ul, ol) { margin-block: 0; }
+.markdown-rendered :is(li, .callout-content, blockquote) > :first-child { margin-top: 0; }
+.markdown-rendered :is(li, .callout-content, blockquote) > :last-child { margin-bottom: 0; }
+.markdown-rendered.markdown-rendered.markdown-rendered .markdown-preview-section > div:first-child > :first-child { margin-top: 0; }
+.markdown-source-view.mod-cm6 .cm-line.cm-line.cm-line.cm-line.cm-line {
+padding-top: max(0px, var(--sw-line-top, 0px), var(--sw-prev-bottom, 0px));
+}
+.markdown-source-view.mod-cm6 .HyperMD-header-1 + .cm-line { --sw-prev-bottom: var(--sw-space-h1-bottom); }
+.markdown-source-view.mod-cm6 .HyperMD-header-2 + .cm-line { --sw-prev-bottom: var(--sw-space-h2-bottom); }
+.markdown-source-view.mod-cm6 .HyperMD-header-3 + .cm-line { --sw-prev-bottom: var(--sw-space-h3-bottom); }
+.markdown-source-view.mod-cm6 :is(.HyperMD-header-4, .HyperMD-header-5, .HyperMD-header-6) + .cm-line { --sw-prev-bottom: var(--sw-space-h4-bottom); }
+.markdown-source-view.mod-cm6 .HyperMD-list-line + .cm-line:not(.HyperMD-list-line) { --sw-prev-bottom: var(--sw-space-list); }
+.markdown-source-view.mod-cm6 .HyperMD-codeblock-end + .cm-line { --sw-prev-bottom: var(--sw-space-code); }
+.markdown-source-view.mod-cm6 .cm-table-widget + .cm-line { --sw-prev-bottom: var(--sw-space-table); }
+.markdown-source-view.mod-cm6 .cm-callout + .cm-line { --sw-prev-bottom: var(--sw-space-callout); }
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-header-2 { --sw-line-top: var(--sw-space-h2-top); }
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-header-3 { --sw-line-top: var(--sw-space-h3-top); }
+.markdown-source-view.mod-cm6 .cm-line:is(.HyperMD-header-4, .HyperMD-header-5, .HyperMD-header-6) { --sw-line-top: var(--sw-space-h4-top); }
+.markdown-source-view.mod-cm6 .cm-line:not(.HyperMD-list-line) + .HyperMD-list-line { --sw-line-top: var(--sw-space-list); }
+.markdown-source-view.mod-cm6 .cm-line.cm-line.cm-line.cm-line.cm-line.cm-line.HyperMD-quote:not(.HyperMD-quote + .HyperMD-quote) {
+padding-top: var(--sw-space-quote);
+}
+body:not(.sw-plain-quotes) .markdown-source-view.mod-cm6 .cm-line.cm-line.cm-line.cm-line.cm-line.cm-line.HyperMD-quote:not(.HyperMD-quote + .HyperMD-quote) {
+padding-top: calc(14px + var(--sw-space-quote));
+}
+.markdown-source-view.mod-cm6 .cm-line.cm-line.cm-line.cm-line.cm-line.cm-line.HyperMD-codeblock-begin {
+padding-top: var(--sw-space-code);
+}
+.markdown-source-view.mod-cm6 .cm-embed-block:is(.cm-table-widget, .cm-callout) :is(table, .callout) { margin-block: 0; }
+.markdown-source-view.mod-cm6 .cm-table-widget { padding-top: var(--sw-space-table); }
+.markdown-source-view.mod-cm6 .cm-callout { padding-top: var(--sw-space-callout); }
+.markdown-preview-view.markdown-preview-view .markdown-preview-sizer.markdown-preview-sizer,
+.markdown-source-view.mod-cm6.mod-cm6 .cm-sizer.cm-sizer {
+padding-top: var(--sw-page-top);
+}
+.markdown-source-view.mod-cm6 .cm-content > .cm-line.cm-line.cm-line.cm-line.cm-line:first-child {
+padding-top: 0;
+}
 .markdown-rendered a,
 .markdown-source-view.mod-cm6 :is(.cm-hmd-internal-link, .cm-link, .cm-url) {
 text-underline-offset: 0.18em;
@@ -536,7 +602,6 @@ vertical-align: 0.32em;
 mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 17 17 7'/%3E%3Cpath d='M8 7h9v9'/%3E%3C/svg%3E") no-repeat center / contain;
 }
 body:not(.sw-plain-quotes) .markdown-rendered blockquote {
-margin: 1.6em 0;
 padding: 20px 26px;
 border: 0;
 border-radius: var(--radius-xl);
@@ -566,7 +631,7 @@ body:not(.sw-plain-quotes) .markdown-source-view.mod-cm6 .HyperMD-quote::before 
 display: none;
 }
 body:not(.sw-plain-quotes) .markdown-source-view.mod-cm6 .HyperMD-quote + .cm-line:not(.HyperMD-quote) {
-padding-top: 16px;
+padding-top: calc(14px + max(var(--sw-space-quote), var(--sw-line-top, 0px)));
 }
 body:not(.sw-plain-quotes) .markdown-source-view.mod-cm6 .HyperMD-quote + .cm-line:not(.HyperMD-quote)::after {
 content: "";
@@ -950,7 +1015,7 @@ border-top-left-radius: var(--radius-l);
 --inline-title-size: 2em;
 --h1-size: 1.85em;
 --h2-size: 1.45em;
---h3-size: 1.22em;
+--h3-size: 1.14em;
 --h4-size: 1.06em;
 --h5-size: 1em;
 --h6-size: 0.78em;

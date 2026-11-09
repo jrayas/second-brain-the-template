@@ -1,0 +1,9 @@
+{
+	"id": "hide-folders-and-files",
+	"name": "Hide Folders and Files",
+	"version": "0.1.1",
+	"minAppVersion": "1.0.0",
+	"description": "Hides and toggles configured folders and files in the file explorer.",
+	"author": "Dominic",
+	"isDesktopOnly": false
+}
